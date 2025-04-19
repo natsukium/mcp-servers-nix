@@ -21,6 +21,7 @@
         "claude"
         "vscode"
         "vscode-workspace"
+        "zed"
       ];
       default = "claude";
       description = ''
@@ -28,6 +29,7 @@
         - "claude": Standard Claude Desktop configuration format using "mcpServers" key
         - "vscode": VSCode global configuration format using "mcp.servers" keys
         - "vscode-workspace": VSCode workspace configuration format with top-level "servers" key,
+        - "zed": Zed configuration format with top-level "context_servers" key,
       '';
     };
     fileName = lib.mkOption {
@@ -62,6 +64,8 @@
           ]
         else if (config.flavor == "vscode-workspace") then
           [ "servers" ]
+        else if (config.flavor == "zed") then
+          [ "context_servers" ]
         else
           [ "mcpServers" ];
     in
