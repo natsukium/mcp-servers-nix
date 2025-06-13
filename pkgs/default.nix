@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, uv2nix ? null, pyproject-nix ? null }:
 {
   # reference servers
   mcp-server-aws-kb-retrieval = pkgs.callPackage (import ./reference/generic-ts.nix {
@@ -57,7 +57,7 @@
   # official servers
   mcp-grafana = pkgs.callPackage ./official/grafana { };
   mcp-nixos = pkgs.callPackage ./official/mcp-nixos { };
-  mcp-server-filesystem-safurrier = pkgs.callPackage ./official/mcp-server-filesystem-safurrier { };
+  mcp-server-filesystem-safurrier = pkgs.callPackage ./official/mcp-server-filesystem-safurrier { python311 = pkgs.python311; };
   notion-mcp-server = pkgs.callPackage ./official/notion { };
   playwright-mcp = pkgs.callPackage ./official/playwright { };
   github-mcp-server = pkgs.callPackage ./official/github { };

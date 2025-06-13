@@ -29,7 +29,10 @@
       lib = import ./lib;
 
       packages = forAllSystems (
-        system: (import ./. { pkgs = import nixpkgs { inherit system; }; }).packages
+        system: (import ./. { 
+          pkgs = import nixpkgs { inherit system; };
+          inherit uv2nix pyproject-nix;
+        }).packages
       );
 
       overlays.default = import ./overlays;

@@ -1,4 +1,4 @@
-{ callPackage, fetchFromGitHub }:
+{ callPackage, fetchFromGitHub, python311 }:
 
 callPackage ../../reference/generic-uv.nix {
   pname = "mcp-filesystem";
@@ -7,6 +7,7 @@ callPackage ../../reference/generic-uv.nix {
     owner = "timblaktu";
     repo = "mcp-filesystem-safurrier";
     rev = "uv"; # Using the UV branch
-    hash = "sha256-0xwrkqaq20jfq5m28xhdyg6mvw5vsgbl5x2i74h7222fj25hb16x";
+    hash = "sha256-3YQFi5BOCHEgOVH0QtfTu/BdzfMNdiRqwU4CgRWemXc=";
   };
+  inherit python311;
 }
