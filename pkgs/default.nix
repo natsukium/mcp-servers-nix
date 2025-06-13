@@ -1,4 +1,4 @@
-{ pkgs, uv2nix ? null, pyproject-nix ? null }:
+{ pkgs, uv2nix ? null, pyproject-nix ? null, pyproject-build-systems ? null }:
 {
   # reference servers
   mcp-server-aws-kb-retrieval = pkgs.callPackage (import ./reference/generic-ts.nix {
@@ -54,7 +54,22 @@
   mcp-server-sqlite = pkgs.callPackage ./reference/sqlite.nix { };
   mcp-server-time = pkgs.callPackage ./reference/time.nix { };
 
-  # official servers
+  # UV-based servers (using proper uv2nix)
+  mcp-server-filesystem-safurrier-uv2nix = if (uv2nix != null && pyproject-nix != null && pyproject-build-systems != null) then
+    pkgs.callPackage ./official/mcp-server-filesystem-safurrier/uv2nix.nix {
+      inherit uv2nix pyproject-nix pyproject-build-systems;
+      python312 = pkgs.python312;
+    }
+  else null;
+  
+  mcp-nixos-uv2nix = if (uv2nix != null && pyproject-nix != null && pyproject-build-systems != null) then
+    pkgs.callPackage ./official/mcp-nixos/uv2nix.nix {
+      inherit uv2nix pyproject-nix pyproject-build-systems;
+      python312 = pkgs.python312;
+    }
+  else null;
+
+  # official servers (original implementations)
   mcp-grafana = pkgs.callPackage ./official/grafana { };
   mcp-nixos = pkgs.callPackage ./official/mcp-nixos { };
   mcp-server-filesystem-safurrier = pkgs.callPackage ./official/mcp-server-filesystem-safurrier { python311 = pkgs.python311; };

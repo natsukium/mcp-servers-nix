@@ -12,10 +12,17 @@
       inputs.pyproject-nix.follows = "pyproject-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
+    pyproject-build-systems = {
+      url = "github:pyproject-nix/build-system-pkgs";
+      inputs.pyproject-nix.follows = "pyproject-nix";
+      inputs.uv2nix.follows = "uv2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { self, nixpkgs, pyproject-nix, uv2nix }:
+    { self, nixpkgs, pyproject-nix, uv2nix, pyproject-build-systems }:
     let
       inherit (nixpkgs) lib;
       forAllSystems = lib.genAttrs [
@@ -31,7 +38,7 @@
       packages = forAllSystems (
         system: (import ./. { 
           pkgs = import nixpkgs { inherit system; };
-          inherit uv2nix pyproject-nix;
+          inherit uv2nix pyproject-nix pyproject-build-systems;
         }).packages
       );
 
