@@ -29,20 +29,18 @@ let
     dontBuild = true;
     dontFixup = true;
 
+    env.BUN_INSTALL_CACHE_DIR = "$TMPDIR/cache";
+
     installPhase = ''
-      export HOME=$TMPDIR
+      mkdir -p $BUN_INSTALL_CACHE_DIR
 
-      # Install dependencies
-      bun install --frozen-lockfile --no-cache
+      bun install --frozen-lockfile --no-cache --backend copyfile
 
-      # Copy to output
-      mkdir -p $out
-      cp -r node_modules $out/
-      cp bun.lock package.json $out/
+      mkdir $out
+      cp -r $BUN_INSTALL_CACHE_DIR $out
     '';
 
-    # This hash represents the dependencies
-    outputHash = "sha256-vNgJRV23T9/cfTHI5FRiW5K64VIxB5nehADZ1AeuAj0=";
+    outputHash = "sha256-GdWw9rA2CcJA7p4UWwz2qTQzZxpBsztAUwuVKvuuyrc=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
@@ -58,13 +56,12 @@ stdenv.mkDerivation {
     makeWrapper
   ];
 
+  env.BUN_INSTALL_CACHE_DIR = "${deps}/cache";
+
   buildPhase = ''
     runHook preBuild
 
-    export HOME=$TMPDIR
-
-    cp -r ${deps}/node_modules .
-    cp ${deps}/bun.lock .
+    bun install
 
     substituteInPlace node_modules/.bin/tsc \
       --replace-fail "/usr/bin/env node" "${lib.getExe nodejs-slim}"
@@ -80,6 +77,11 @@ stdenv.mkDerivation {
     mkdir -p $out/lib/context7-mcp
 
     cp -r dist $out/lib/context7-mcp/
+
+    # bun doesn't support the `prune` command
+    # https://github.com/oven-sh/bun/issues/3605
+    rm -r node_modules
+    bun install --production
 
     cp -r node_modules $out/lib/context7-mcp/
     cp package.json $out/lib/context7-mcp/
