@@ -17,7 +17,7 @@ buildNpmPackage {
     cp ${./package-lock.json} package-lock.json
   '';
 
-  npmDepsHash = "sha256-z2XyIbZnFPjp7KZBqAeU/Rk7yu+qWD35uoeGYHNrdAs=";
+  npmDepsHash = "sha256-sHfcCq/sy8v9NXNHM56xSG5CnGM2EM3ofLVN5/deEMw=";
 
   npmWorkspace = "src/${workspace}";
 
