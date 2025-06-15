@@ -68,6 +68,13 @@
       python312 = pkgs.python312;
     }
   else null;
+  
+  cli-mcp-server-uv2nix = if (uv2nix != null && pyproject-nix != null && pyproject-build-systems != null) then
+    pkgs.callPackage ./official/cli-mcp-server/uv2nix.nix {
+      inherit uv2nix pyproject-nix pyproject-build-systems;
+      python312 = pkgs.python312;
+    }
+  else null;
 
   # official servers (original implementations)
   mcp-grafana = pkgs.callPackage ./official/grafana { };
