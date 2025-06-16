@@ -12,7 +12,7 @@ python3Packages.buildPythonApplication rec {
     owner = "utensils";
     repo = "mcp-nixos";
     rev = "v${version}";
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # Placeholder - needs real hash
+    hash = "sha256-NwP+zM1VGLOzIm+mLZVK9/9ImFwuiWhRJ9QK3hGpQsY=";
   };
 
   pyproject = true;
@@ -22,13 +22,26 @@ python3Packages.buildPythonApplication rec {
   ];
 
   dependencies = with python3Packages; [
-    # Core MCP dependencies
+    # Core dependencies available in nixpkgs
     pydantic
     httpx
     beautifulsoup4
-    # Additional dependencies based on typical MCP Python servers
-    # Will need to check actual pyproject.toml for exact list
+    requests
+    # Note: 'mcp' package not available in nixpkgs
+    # The uv2nix version handles the full dependency set
   ];
+
+  # Handle version conflicts and missing dependencies
+  nativeBuildInputs = [
+    python3Packages.pythonRelaxDepsHook
+  ];
+
+  pythonRelaxDeps = [
+    "beautifulsoup4"
+  ];
+
+  # Skip runtime dependency check since 'mcp' package not in nixpkgs
+  dontCheckRuntimeDeps = true;
 
   pythonImportsCheck = [ "mcp_nixos" ];
 

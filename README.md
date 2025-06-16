@@ -245,6 +245,7 @@ The framework includes modules for the following MCP servers:
 
 - [aws-kb-retrieval](./modules/aws-kb-retrieval.nix)
 - [brave-search](./modules/brave-search.nix)
+- [context7](./modules/context7.nix)
 - [everart](./modules/everart.nix)
 - [everything](./modules/everything.nix)
 - [fetch](./modules/fetch.nix)
