@@ -1,16 +1,16 @@
 { pkgs }:
+let
+  inherit (pkgs) lib;
+  # Ideally we should use `throw` for removed packages, but that breaks
+  # `nix flake check` and `nix flake show`. As a workaround, we use
+  # `lib.warn` with `emptyFile` to create a dummy derivation.
+  warnRemoved = msg: lib.warn msg pkgs.emptyFile;
+in
 {
   # reference servers
-  mcp-server-aws-kb-retrieval = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "aws-kb-retrieval";
-    workspace = "aws-kb-retrieval-server";
-  }) { };
-  mcp-server-brave-search = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "brave-search";
-  }) { };
-  mcp-server-everart = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "everart";
-  }) { };
+  mcp-server-aws-kb-retrieval = warnRemoved "mcp-server-aws-kb-retrieval has been removed as the package was archived upstream";
+  mcp-server-brave-search = warnRemoved "mcp-server-brave-search has been removed as the package was archived upstream";
+  mcp-server-everart = warnRemoved "mcp-server-everart has been removed as the package was archived upstream";
   mcp-server-everything = pkgs.callPackage (import ./reference/generic-ts.nix {
     service = "everything";
   }) { };
@@ -19,39 +19,23 @@
     service = "filesystem";
   }) { };
   mcp-server-git = pkgs.callPackage ./reference/git.nix { };
-  mcp-server-github = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "github";
-  }) { };
-  mcp-server-gitlab = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "gitlab";
-  }) { };
-  mcp-server-gdrive = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "gdrive";
-  }) { };
-  mcp-server-google-maps = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "google-maps";
-  }) { };
+  mcp-server-github = warnRemoved "mcp-server-github has been removed as the package was archived upstream";
+  mcp-server-gitlab = warnRemoved "mcp-server-gitlab has been removed as the package was archived upstream";
+  mcp-server-gdrive = warnRemoved "mcp-server-gdrive has been removed as the package was archived upstream";
+  mcp-server-google-maps = warnRemoved "mcp-server-google-maps has been removed as the package was archived upstream";
   mcp-server-memory = pkgs.callPackage (import ./reference/generic-ts.nix {
     service = "memory";
   }) { };
-  mcp-server-postgres = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "postgres";
-  }) { };
-  mcp-server-puppeteer = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "puppeteer";
-  }) { };
-  mcp-server-redis = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "redis";
-  }) { };
-  mcp-server-sentry = pkgs.callPackage ./reference/sentry.nix { };
+  mcp-server-postgres = warnRemoved "mcp-server-postgres has been removed as the package was archived upstream";
+  mcp-server-puppeteer = warnRemoved "mcp-server-puppeteer has been removed as the package was archived upstream";
+  mcp-server-redis = warnRemoved "mcp-server-redis has been removed as the package was archived upstream";
+  mcp-server-sentry = warnRemoved "mcp-server-sentry has been removed as the package was archived upstream";
+  mcp-server-slack = warnRemoved "mcp-server-slack has been removed as the package was archived upstream";
+  mcp-server-sqlite = warnRemoved "mcp-server-sqlite has been removed as the package was archived upstream";
   mcp-server-sequential-thinking = pkgs.callPackage (import ./reference/generic-ts.nix {
     service = "sequential-thinking";
     workspace = "sequentialthinking";
   }) { };
-  mcp-server-slack = pkgs.callPackage (import ./reference/generic-ts.nix {
-    service = "slack";
-  }) { };
-  mcp-server-sqlite = pkgs.callPackage ./reference/sqlite.nix { };
   mcp-server-time = pkgs.callPackage ./reference/time.nix { };
 
   # official servers

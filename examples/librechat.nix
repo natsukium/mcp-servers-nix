@@ -12,10 +12,6 @@ mcp-servers.lib.mkConfig pkgs {
       enable = true;
       url = "http://localhost:3001/sse";
     };
-    puppeteer = {
-      enable = true;
-      type = "stdio";
-    };
     filesystem = {
       enable = true;
       args = [ "/home/user/LibreChat/" ];

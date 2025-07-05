@@ -5,6 +5,7 @@ callPackage ./generic-python.nix {
     mcp
     pydantic
     tzdata
+    tzlocal
   ];
   doCheck = false;
 }
