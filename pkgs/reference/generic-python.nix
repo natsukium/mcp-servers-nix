@@ -2,14 +2,14 @@
   lib,
   service,
   fetchFromGitHub,
-  python3Packages,
-  build-system ? [ python3Packages.hatchling ],
+  python314Packages,
+  build-system ? [ python314Packages.hatchling ],
   dependencies ? [ ],
   pythonRelaxDeps ? [ ],
   doCheck ? true,
-  nativeCheckInputs ? [ python3Packages.pytestCheckHook ],
+  nativeCheckInputs ? [ python314Packages.pytestCheckHook ],
 }:
-python3Packages.buildPythonApplication rec {
+python314Packages.buildPythonApplication rec {
   pname = "mcp-server-${service}";
   inherit (import ./source.nix { inherit fetchFromGitHub; }) version src;
   pyproject = true;
