@@ -1,7 +1,7 @@
-{ callPackage, python314Packages }:
+{ callPackage, python313Packages }:
 callPackage ./generic-python.nix {
   service = "time";
-  dependencies = with python314Packages; [
+  dependencies = with python313Packages; [
     mcp
     pydantic
     tzdata
