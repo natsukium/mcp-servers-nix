@@ -104,7 +104,11 @@ stdenv.mkDerivation {
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [
       natsukium
-      vaporif
+      rec {
+        github = "vaporif";
+        githubId = 3934971;
+        name = github;
+      }
     ];
     mainProgram = "context7-mcp";
   };
