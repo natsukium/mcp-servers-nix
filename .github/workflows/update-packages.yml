@@ -44,7 +44,10 @@ jobs:
         id: update-package
         run: |
           if [[ "${{ matrix.package }}" == "context7-mcp" ]]; then
+            echo updating...
             OUTPUT=$(./pkgs/official/context7/update.sh)
+            echo done...
+            echo $OUTPUT
           else
             if [[ "${{ matrix.package }}" == "serena" ]]; then
               VERSION_FLAG="--version=branch"
@@ -58,9 +61,11 @@ jobs:
 
           # Extract title (first line containing package name)
           COMMIT_TITLE=$(echo "$OUTPUT" | grep -E "^${{ matrix.package }}:" | head -1)
+          echo $COMMIT_TITLE
 
           # Extract body (Diff and Changelog lines)
           COMMIT_BODY=$(echo "$OUTPUT" | grep -E "^(Diff:|Changelog:)" | sed 's/$/\n/')
+          echo $COMMIT_BODY
 
           echo "title=$COMMIT_TITLE" >> $GITHUB_OUTPUT
           echo "body<<EOF" >> $GITHUB_OUTPUT

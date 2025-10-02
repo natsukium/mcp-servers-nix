@@ -2,7 +2,11 @@
 #!nix-shell -I nixpkgs=flake:nixpkgs -i bash -p nix-update gnused
 set -euo pipefail
 
+echo enter the update script
+
 SOURCE="$PWD/pkgs/official/context7/default.nix"
+
+echo "$SOURCE"
 
 nix-update --flake context7-mcp --print-commit-message
 
