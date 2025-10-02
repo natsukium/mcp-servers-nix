@@ -12,6 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         package:
+          - context7-mcp
           - github-mcp-server
           - mcp-grafana
           - playwright-mcp
@@ -42,14 +43,18 @@ jobs:
       - name: Update package
         id: update-package
         run: |
-          if [[ "${{ matrix.package }}" == "serena" ]]; then
-            VERSION_FLAG="--version=branch"
+          if [[ "${{ matrix.package }}" == "context7-mcp" ]]; then
+            OUTPUT=$(./pkgs/official/context7/update.sh)
           else
-            VERSION_FLAG=""
-          fi
+            if [[ "${{ matrix.package }}" == "serena" ]]; then
+              VERSION_FLAG="--version=branch"
+            else
+              VERSION_FLAG=""
+            fi
 
-          OUTPUT=$(nix run nixpkgs#nix-update \
-            -- --flake ${{ matrix.package }} $VERSION_FLAG --print-commit-message)
+            OUTPUT=$(nix run nixpkgs#nix-update \
+              -- --flake ${{ matrix.package }} $VERSION_FLAG --print-commit-message)
+          fi
 
           # Extract title (first line containing package name)
           COMMIT_TITLE=$(echo "$OUTPUT" | grep -E "^${{ matrix.package }}:" | head -1)
