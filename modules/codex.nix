@@ -18,7 +18,7 @@ in
 
   config.settings.servers = lib.mkIf cfg.enable {
     codex = {
-      args = ["mcp-server"];
+      args = [ "mcp-server" ];
     };
   };
 }
