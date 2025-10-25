@@ -245,6 +245,7 @@ The system automatically wraps the package when either `envFile` or `passwordCom
 The framework includes modules for the following MCP servers:
 
 - [clickup](./modules/clickup.nix)
+- [codex](./modules/codex.nix)
 - [context7](./modules/context7.nix)
 - [everything](./modules/everything.nix)
 - [fetch](./modules/fetch.nix)
