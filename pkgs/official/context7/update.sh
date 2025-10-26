@@ -4,7 +4,11 @@ set -euo pipefail
 
 SOURCE="$PWD/pkgs/official/context7/default.nix"
 
+echo context7 1
+
 nix-update --flake context7-mcp --print-commit-message
+
+echo context7 2
 
 BUILD_OUTPUT=$(nix-build -A context7-mcp "$PWD" 2>&1 || true)
 NEW_OUTPUT_HASH=$(echo "$BUILD_OUTPUT" | grep -oP 'got:\s+sha256-\K[A-Za-z0-9+/=]+' | head -1)
@@ -15,5 +19,7 @@ if [[ -z "$NEW_OUTPUT_HASH" ]]; then
     echo "$BUILD_OUTPUT" >&2
     exit 1
 fi
+
+echo context7 3
 
 sed -i "s|outputHash = \"sha256-[^\"]*\"|outputHash = \"sha256-$NEW_OUTPUT_HASH\"|" "$SOURCE"

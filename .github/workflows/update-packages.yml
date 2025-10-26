@@ -44,6 +44,7 @@ jobs:
         id: update-package
         run: |
           if [[ "${{ matrix.package }}" == "context7-mcp" ]]; then
+            echo context7 start
             OUTPUT=$(./pkgs/official/context7/update.sh)
           else
             if [[ "${{ matrix.package }}" == "serena" ]]; then
