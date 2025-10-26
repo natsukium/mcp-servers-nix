@@ -1,5 +1,5 @@
-#!/usr/bin/env nix
-#!nix shell nixpkgs#bash nixpkgs#nix-update nixpkgs#gnused --command bash
+#!/usr/bin/env nix-shell
+#!nix-shell -I nixpkgs=flake:nixpkgs -i bash -p nix-update gnused
 set -euo pipefail
 
 SOURCE="$PWD/pkgs/official/context7/default.nix"
