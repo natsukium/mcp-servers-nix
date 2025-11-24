@@ -15,6 +15,8 @@
     {
       lib = import ./lib;
 
+      flakeModule = ./flakeModule.nix;
+
       packages = forAllSystems (
         system: (import ./. { pkgs = import nixpkgs { inherit system; }; }).packages
       );
