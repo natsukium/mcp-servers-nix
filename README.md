@@ -197,6 +197,46 @@ nix-build config.nix
 nix build
 ```
 
+#### Using Flake-Parts Module
+
+If you're already using [flake-parts](https://flake.parts/) in your project, you can integrate mcp-servers-nix as a flake-parts module for a more seamless experience.
+
+1. Add the flake module to your imports:
+
+```nix
+# flake.nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
+  };
+
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ inputs.mcp-servers-nix.flakeModule ];
+
+      perSystem = { config, ... }: {
+        mcp-servers = {
+          programs.playwright.enable = true;
+          flavors.claude-code.enable = true;
+        };
+
+        # Use the generated development shell
+        devShells.default = config.mcp-servers.devShell;
+      };
+    };
+}
+```
+
+Key features of the flake-parts module:
+
+- **Multi-flavor support**: Generate configurations for Claude Code (`.mcp.json`) and VSCode workspace (`.vscode/mcp.json`) simultaneously using the `flavors` option
+- **Automatic development shell**: Access `config.mcp-servers.devShell` which sets up symlinks to configuration files automatically
+- **Per-flavor configuration**: Customize settings for each client using `flavors.<flavor>.programs` and `flavors.<flavor>.settings`
+
+For a complete example with multiple flavors, see [`flake-parts-module`](./examples/flake-parts-module/flake.nix).
+
 ## Examples
 
 Check the `examples` directory for complete configuration examples:
@@ -206,6 +246,7 @@ Check the `examples` directory for complete configuration examples:
 - [`librechat.nix`](./examples/librechat.nix): Configuration for LibreChat integration
 - [`codex.nix`](./examples/codex.nix): Codex CLI integration with MCP servers
 - [`vscode-workspace`](./examples/vscode-workspace/flake.nix): VS Code workspace configuration example
+- [`flake-parts-module`](./examples/flake-parts-module/flake.nix): Flake-parts module integration with multi-flavor support
 
 ### Real World Examples
 
