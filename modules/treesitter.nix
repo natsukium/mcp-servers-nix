@@ -1,4 +1,6 @@
 { mkServerModule, ... }:
 {
-  imports = [ (mkServerModule { name = "treesitter-mcp-server"; }) ];
+  imports = [ (mkServerModule {
+    name = "treesitter";
+  }) ];
 }
