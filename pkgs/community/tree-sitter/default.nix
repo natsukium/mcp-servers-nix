@@ -1,6 +1,7 @@
 {
   lib,
   python3,
+  fetchpatch,
   fetchFromGitHub,
 }:
 
@@ -15,6 +16,13 @@ python3.pkgs.buildPythonApplication rec {
     rev = "v${version}";
     hash = "sha256-YRnTEzs8OAY0ADkTT3b20owVDnEJ5om4VoDFDRbjXVs=";
   };
+
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/joubertdj/mcp-server-tree-sitter/commit/24334d3322716cd12c65fe289587c3c341d6c030.patch";
+      hash = "sha256-9VwTTIZFcU+nCBuJH2LOEhJBzm5B4m6KUgXpBP1gdYs=";
+    })
+  ];
 
   build-system = [
     python3.pkgs.hatchling
