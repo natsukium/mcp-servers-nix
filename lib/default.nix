@@ -167,7 +167,7 @@ let
         }
         {
           imports = (
-            builtins.map (module: ../modules + "/${module}") (builtins.attrNames (builtins.readDir ../modules))
+            builtins.map (module: ../modules + "/${module}") (builtins.filter (name: builtins.match ".*\\.nix" name != null) (builtins.attrNames (builtins.readDir ../modules)))
           );
         }
         config
