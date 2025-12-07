@@ -21,6 +21,7 @@
     flavor = lib.mkOption {
       type = lib.types.enum [
         "claude"
+        "claude-code"
         "codex"
         "vscode"
         "vscode-workspace"
@@ -30,6 +31,7 @@
       description = ''
         Configuration file type.
         - "claude": Standard Claude Desktop configuration format using "mcpServers" key
+        - "claude-code": Claude Code configuration format using "mcpServers" key
         - "codex": Codex CLI configuration format using "mcp_servers" key
         - "vscode": VSCode global configuration format using "mcp.servers" keys
         - "vscode-workspace": VSCode workspace configuration format with top-level "servers" key,
