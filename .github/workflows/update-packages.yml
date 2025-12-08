@@ -12,6 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         package:
+          - chrome-devtools-mcp
           - github-mcp-server
           - mcp-grafana
           - playwright-mcp

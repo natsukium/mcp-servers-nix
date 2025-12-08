@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchurl,
+  fetchzip,
   nodejs,
   makeWrapper,
   versionCheckHook,
@@ -14,25 +14,25 @@ stdenv.mkDerivation {
   pname = "chrome-devtools-mcp";
   inherit version;
 
-  src = fetchurl {
+  src = fetchzip {
     url = "https://registry.npmjs.org/chrome-devtools-mcp/-/chrome-devtools-mcp-${version}.tgz";
-    hash = "sha256-Gc+MqwV5HfkZLp2LHbSE1T2nqxnlqzG6Ls7NAORCCpE=";
+    hash = "sha256-pePA61e9DmdmR9PmCaOaDr7cIJ2eLzqADTEZuAp45V8=";
   };
 
   nativeBuildInputs = [ nodejs makeWrapper ];
 
-  unpackPhase = ''
-    tar xzf $src
-  '';
-
   installPhase = ''
     mkdir -p $out/lib/node_modules/chrome-devtools-mcp
-    cp -r package/* $out/lib/node_modules/chrome-devtools-mcp/
+    cp -r . $out/lib/node_modules/chrome-devtools-mcp/
 
     mkdir -p $out/bin
     makeWrapper ${nodejs}/bin/node $out/bin/chrome-devtools-mcp \
       --add-flags "$out/lib/node_modules/chrome-devtools-mcp/build/src/index.js"
   '';
+
+  passthru = {
+    updateScript = ./update.sh;
+  };
 
   doInstallCheck = true;
   nativeInstallCheckInputs = [ versionCheckHook ];
