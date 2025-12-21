@@ -23,6 +23,11 @@
 
       overlays.default = import ./overlays;
 
+      nixosModules = {
+        mcp-servers = ./modules/nixos;
+        default = self.nixosModules.mcp-servers;
+      };
+
       checks = lib.foldr (x: acc: lib.recursiveUpdate x acc) { } [
         (forAllSystems (system: import ./tests { pkgs = import nixpkgs { inherit system; }; }))
         (forAllSystems (
