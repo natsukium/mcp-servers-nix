@@ -37,15 +37,6 @@ python3.pkgs.buildPythonApplication rec {
     types-pyyaml
   ];
 
-  optional-dependencies = with python3.pkgs; {
-    dev = [
-      mypy
-      pytest
-      pytest-cov
-      ruff
-    ];
-  };
-
   pythonImportsCheck = [
     "mcp_server_tree_sitter"
   ];
