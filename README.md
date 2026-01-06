@@ -268,18 +268,21 @@ Each module provides specific configuration options, but there are some common o
 Each enabled module (using `programs.<module>.enable = true;`) provides the following options:
 
 - `package`: The package to use for this module
-- `type`: Server connection type (`sse` or `stdio`, default: `null`)
+- `type`: Server connection type (`http`, `sse`, or `stdio`, default: `null`)
 - `args`: Array of arguments passed to the command (default: `[]`)
 - `env`: Environment variables for the server (default: `{}`)
-- `url`: URL of the server for "sse" connections (default: `null`)
+- `url`: URL of the server for `http` and `sse` connections (default: `null`)
+- `headers`: HTTP headers for authentication, used with `http` and `sse` transport types (default: `{}`)
 - `envFile`: Path to an .env file from which to load additional environment variables (default: `null`)
 - `passwordCommand`: Command to execute to retrieve secrets. Can be specified as a string that outputs in the format "KEY=VALUE" which will be exported as environment variables, or as an attribute set where keys are environment variable names and values are command lists that output the value. Useful for integrating with password managers (default: `null`)
 
 ### Security Note
 
-For security reasons, do not hardcode authentication credentials in the `env` attribute. All files in `/nix/store` can be read by anyone with access to the store. Always use `envFile` or `passwordCommand` instead.
+For security reasons, do not hardcode authentication credentials in the `env` or `headers` attributes. All files in `/nix/store` can be read by anyone with access to the store.
 
-The system automatically wraps the package when either `envFile` or `passwordCommand` is set, which allows secure retrieval of credentials without exposing them in the Nix store.
+For `env`, use `envFile` or `passwordCommand` instead. The system automatically wraps the package when either option is set, allowing secure retrieval of credentials without exposing them in the Nix store.
+
+For `headers`, use variable expansion syntax (e.g., `${VAR}`) supported by the client. Note that `passwordCommand` only works with `stdio` servers since `http` and `sse` servers are not wrapped.
 
 ## Available Modules
 

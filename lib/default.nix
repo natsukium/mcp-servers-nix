@@ -27,6 +27,7 @@ let
         type = lib.mkOption {
           type = lib.types.nullOr (
             lib.types.enum [
+              "http"
               "sse"
               "stdio"
             ]
@@ -69,7 +70,21 @@ let
           type = lib.types.nullOr lib.types.str;
           default = null;
           description = ''
-            URL of the server (for "sse").
+            URL of the server (for "http" and "sse").
+          '';
+        };
+        headers = lib.mkOption {
+          type = with lib.types; attrsOf str;
+          default = { };
+          description = ''
+            HTTP headers for authentication.
+            Used with "http" and "sse" transport types.
+            For security reasons, do not hardcode credentials in headers.
+            Use variable expansion syntax (e.g., ''${VAR}) supported by the client.
+            Set environment variables before launching the client instead.
+          '';
+          example = lib.literalExpression ''
+            { Authorization = "Bearer \''${API_TOKEN}"; }
           '';
         };
         envFile = lib.mkOption {
@@ -139,6 +154,7 @@ let
               inherit (cfg)
                 args
                 env
+                headers
                 type
                 url
                 ;
