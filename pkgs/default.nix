@@ -37,5 +37,5 @@ in
   slite-mcp-server = pkgs.callPackage ./official/slite { };
 
   # community servers
-  clickup-mcp-server = pkgs.callPackage ./community/clickup { };
+  clickup-mcp-server = warnRemoved "clickup-mcp-server has been removed since upstream stopped distribution and switched to shareware";
 }
