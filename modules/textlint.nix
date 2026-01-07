@@ -8,13 +8,11 @@
 let
   cfg = config.programs.textlint;
 
-  allExtensions = cfg.rules ++ cfg.plugins ++ cfg.presets ++ cfg.filterRules ++ cfg.configs;
-
   finalPackage =
-    if allExtensions == [ ] then
+    if cfg.extensions == [ ] then
       pkgs.textlint
     else
-      (pkgs.textlint.withPackages allExtensions).overrideAttrs (old: {
+      (pkgs.textlint.withPackages cfg.extensions).overrideAttrs (old: {
         meta = (old.meta or { }) // {
           mainProgram = "textlint";
         };
@@ -29,53 +27,19 @@ in
   ];
 
   options.programs.textlint = {
-    rules = lib.mkOption {
+    extensions = lib.mkOption {
       type = with lib.types; listOf package;
       default = [ ];
-      example = lib.literalExpression "[ pkgs.textlint-rule-alex pkgs.textlint-rule-terminology ]";
+      example = lib.literalExpression ''
+        [
+          pkgs.textlint-rule-alex
+          pkgs.textlint-plugin-org
+          pkgs.textlint-rule-preset-ja-technical-writing
+        ]
+      '';
       description = ''
-        List of textlint rule packages (textlint-rule-*).
+        List of textlint extension packages (rules, plugins, presets, filter-rules, configs).
         These packages will be available via NODE_PATH.
-      '';
-    };
-
-    plugins = lib.mkOption {
-      type = with lib.types; listOf package;
-      default = [ ];
-      example = lib.literalExpression "[ pkgs.textlint-plugin-org pkgs.textlint-plugin-latex2e ]";
-      description = ''
-        List of textlint plugin packages (textlint-plugin-*).
-        Plugins add support for additional file formats.
-      '';
-    };
-
-    presets = lib.mkOption {
-      type = with lib.types; listOf package;
-      default = [ ];
-      example = lib.literalExpression "[ pkgs.textlint-rule-preset-ja-technical-writing ]";
-      description = ''
-        List of textlint preset packages (textlint-rule-preset-*).
-        Presets bundle multiple rules together.
-      '';
-    };
-
-    filterRules = lib.mkOption {
-      type = with lib.types; listOf package;
-      default = [ ];
-      example = lib.literalExpression "[ pkgs.textlint-filter-rule-comments ]";
-      description = ''
-        List of textlint filter rule packages (textlint-filter-rule-*).
-        Filter rules suppress specific linting errors.
-      '';
-    };
-
-    configs = lib.mkOption {
-      type = with lib.types; listOf package;
-      default = [ ];
-      example = lib.literalExpression "[ pkgs.textlint-config-example ]";
-      description = ''
-        List of textlint shareable config packages (textlint-config-*).
-        Shareable configs provide complete textlint configurations.
       '';
     };
 
