@@ -12,11 +12,7 @@ let
     if cfg.extensions == [ ] then
       pkgs.textlint
     else
-      (pkgs.textlint.withPackages cfg.extensions).overrideAttrs (old: {
-        meta = (old.meta or { }) // {
-          mainProgram = "textlint";
-        };
-      });
+      pkgs.textlint.withPackages cfg.extensions;
 in
 {
   imports = [
