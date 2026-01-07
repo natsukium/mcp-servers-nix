@@ -9,6 +9,4 @@ let
   );
   testDirs = builtins.filter (name: dir.${name} == "directory") (builtins.attrNames dir);
 in
-lib.mergeAttrsList (
-  map (test: import (./. + "/${test}") { inherit pkgs; }) (nixFiles ++ testDirs)
-)
+lib.mergeAttrsList (map (test: import (./. + "/${test}") { inherit pkgs; }) (nixFiles ++ testDirs))

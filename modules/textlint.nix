@@ -9,10 +9,7 @@ let
   cfg = config.programs.textlint;
 
   finalPackage =
-    if cfg.extensions == [ ] then
-      pkgs.textlint
-    else
-      pkgs.textlint.withPackages cfg.extensions;
+    if cfg.extensions == [ ] then pkgs.textlint else pkgs.textlint.withPackages cfg.extensions;
 
   configFile =
     if cfg.configFile != null then
