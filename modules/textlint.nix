@@ -13,6 +13,14 @@ let
       pkgs.textlint
     else
       pkgs.textlint.withPackages cfg.extensions;
+
+  configFile =
+    if cfg.configFile != null then
+      cfg.configFile
+    else if cfg.settings != { } then
+      pkgs.writeText ".textlintrc.json" (builtins.toJSON cfg.settings)
+    else
+      null;
 in
 {
   imports = [
@@ -72,15 +80,21 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = cfg.configFile != null || cfg.settings != { };
+        message = "programs.textlint requires either configFile or settings to be set.";
+      }
+    ];
+
     programs.textlint.package = lib.mkDefault finalPackage;
 
     settings.servers.textlint = {
-      args =
-        [ "--mcp" ]
-        ++ lib.optionals (cfg.configFile != null) [
-          "--config"
-          (toString cfg.configFile)
-        ];
+      args = [
+        "--mcp"
+        "--config"
+        (toString configFile)
+      ];
     };
   };
 }
