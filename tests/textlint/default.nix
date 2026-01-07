@@ -1,7 +1,7 @@
 # Tests for textlint MCP server module
 { pkgs }:
 let
-  mcp-servers = import ../. { inherit pkgs; };
+  mcp-servers = import ../../. { inherit pkgs; };
 in
 {
   # Minimal: bare textlint without extensions or configFile
