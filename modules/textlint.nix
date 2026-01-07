@@ -46,6 +46,27 @@ in
       description = ''
         Path to .textlintrc configuration file.
         This file specifies which rules to enable and their settings.
+        Takes precedence over the settings option.
+      '';
+    };
+
+    settings = lib.mkOption {
+      type = lib.types.attrsOf lib.types.anything;
+      default = { };
+      example = lib.literalExpression ''
+        {
+          rules = {
+            alex = true;
+            terminology = {
+              defaultTerms = true;
+            };
+          };
+        }
+      '';
+      description = ''
+        Textlint configuration expressed as Nix attributes.
+        Will be converted to JSON and used as the configuration file.
+        Ignored if configFile is set.
       '';
     };
   };
