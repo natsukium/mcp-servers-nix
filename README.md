@@ -245,6 +245,7 @@ Check the `examples` directory for complete configuration examples:
 - [`vscode.nix`](./examples/vscode.nix): VS Code integration setup
 - [`librechat.nix`](./examples/librechat.nix): Configuration for LibreChat integration
 - [`codex.nix`](./examples/codex.nix): Codex CLI integration with MCP servers
+- [`opencode.nix`](./examples/opencode.nix): OpenCode CLI integration with MCP servers
 - [`vscode-workspace`](./examples/vscode-workspace/flake.nix): VS Code workspace configuration example
 - [`flake-parts-module`](./examples/flake-parts-module/flake.nix): Flake-parts module integration with multi-flavor support
 
@@ -259,7 +260,7 @@ Each module provides specific configuration options, but there are some common o
 ### Global Options
 
 - `format`: Configuration file format (`json`, `yaml`, or `toml-inline`, default: `json`)
-- `flavor`: Configuration file type (`claude`, `vscode`, or `codex`, default: `claude`)
+- `flavor`: Configuration file type (`claude`, `vscode`, `codex`, or `opencode`, default: `claude`)
 - `fileName`: Configuration file name (default: `claude_desktop_config.json`)
 - `settings`: Custom settings that will be merged with the generated configuration
 
