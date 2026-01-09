@@ -23,12 +23,16 @@ in
         mcp-lib = import ./lib;
 
         flavorNames = [
+          "claude"
           "claude-code"
+          "opencode"
           "vscode-workspace"
         ];
 
         flavorFormatMap = {
+          claude = "json";
           claude-code = "json";
+          opencode = "json";
           vscode-workspace = "json";
         };
 
@@ -86,7 +90,9 @@ in
             configFile = evaluated.config.configFile;
             fileName =
               {
+                claude = "claude_desktop_config.json";
                 claude-code = ".mcp.json";
+                opencode = "opencode.json";
                 vscode-workspace = ".vscode/mcp.json";
               }
               .${flavor};

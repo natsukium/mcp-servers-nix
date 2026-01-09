@@ -237,6 +237,64 @@ Key features of the flake-parts module:
 
 For a complete example with multiple flavors, see [`flake-parts-module`](./examples/flake-parts-module/flake.nix).
 
+#### OpenCode CLI Integration
+
+[OpenCode](https://opencode.ai) is a terminal-based AI coding assistant. It uses a different MCP configuration format than Claude Desktop:
+
+```nix
+# opencode-config.nix
+let
+  pkgs = import <nixpkgs> { };
+  mcp-servers = import (builtins.fetchTarball "https://github.com/natsukium/mcp-servers-nix/archive/refs/heads/main.tar.gz") { inherit pkgs; };
+in
+mcp-servers.lib.mkConfig pkgs {
+  flavor = "opencode";
+  fileName = "opencode.json";
+
+  programs = {
+    filesystem = {
+      enable = true;
+      args = [ "/path/to/allowed/directory" ];
+    };
+    fetch.enable = true;
+    nixos.enable = true;
+  };
+}
+```
+
+Build and link to your OpenCode config directory:
+
+```bash
+nix-build opencode-config.nix
+ln -sf $(pwd)/result ~/.config/opencode/opencode.json
+```
+
+The OpenCode flavor transforms configurations to match OpenCode's expected format:
+- Uses `mcp` as the root key (instead of `mcpServers`)
+- Commands are arrays: `"command": ["/path/to/bin", "arg1", "arg2"]`
+- Uses `type: "local"` for stdio servers, `type: "remote"` for http/sse
+- Uses `environment` instead of `env` for environment variables
+- Includes `enabled: true` for each server
+
+Example output:
+
+```json
+{
+  "mcp": {
+    "filesystem": {
+      "command": ["/nix/store/.../mcp-server-filesystem", "/path/to/allowed/directory"],
+      "enabled": true,
+      "type": "local"
+    },
+    "fetch": {
+      "command": ["/nix/store/.../mcp-server-fetch"],
+      "enabled": true,
+      "type": "local"
+    }
+  }
+}
+```
+
 ## Examples
 
 Check the `examples` directory for complete configuration examples:
@@ -245,6 +303,7 @@ Check the `examples` directory for complete configuration examples:
 - [`vscode.nix`](./examples/vscode.nix): VS Code integration setup
 - [`librechat.nix`](./examples/librechat.nix): Configuration for LibreChat integration
 - [`codex.nix`](./examples/codex.nix): Codex CLI integration with MCP servers
+- [`opencode.nix`](./examples/opencode.nix): OpenCode CLI integration with MCP servers
 - [`vscode-workspace`](./examples/vscode-workspace/flake.nix): VS Code workspace configuration example
 - [`flake-parts-module`](./examples/flake-parts-module/flake.nix): Flake-parts module integration with multi-flavor support
 
@@ -259,7 +318,7 @@ Each module provides specific configuration options, but there are some common o
 ### Global Options
 
 - `format`: Configuration file format (`json`, `yaml`, or `toml-inline`, default: `json`)
-- `flavor`: Configuration file type (`claude`, `vscode`, or `codex`, default: `claude`)
+- `flavor`: Configuration file type (`claude`, `vscode`, `codex`, or `opencode`, default: `claude`)
 - `fileName`: Configuration file name (default: `claude_desktop_config.json`)
 - `settings`: Custom settings that will be merged with the generated configuration
 
