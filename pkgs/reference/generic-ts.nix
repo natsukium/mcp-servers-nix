@@ -9,11 +9,13 @@
   typescript,
   writeScriptBin,
   makeBinaryWrapper,
-  nodejs,
+  nodejs_22,
 }:
 buildNpmPackage {
   pname = "mcp-server-${service}";
   inherit (import ./source.nix { inherit fetchFromGitHub; }) version src;
+
+  nodejs = nodejs_22;
 
   npmDepsHash = "sha256-iRPILytyloL6qRMvy2fsDdqkewyqEfcuVspwUN5Lrqw=";
 
@@ -36,7 +38,7 @@ buildNpmPackage {
   #   instead of a hypothetical root-level dist/index.js
   postInstall = ''
     cp -r src "$out/lib/node_modules/@modelcontextprotocol/servers/src"
-    makeWrapper "${nodejs}/bin/node" "$out/bin/mcp-server-${service}" \
+    makeWrapper "${nodejs_22}/bin/node" "$out/bin/mcp-server-${service}" \
       --add-flags "$out/lib/node_modules/@modelcontextprotocol/servers/src/${workspace}/dist/index.js"
   '';
 
