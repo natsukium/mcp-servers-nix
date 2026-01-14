@@ -15,9 +15,12 @@ python3Packages.buildPythonApplication rec {
     hash = "sha256-Zp66m1DYY0H/0EdOXc6PRwte1Kc4asRuEmbYENm0GRM=";
   };
 
-  build-system = [python3Packages.hatchling];
+  build-system = [ python3Packages.hatchling ];
 
-  pythonRelaxDeps = ["fastmcp" "pydantic"];
+  pythonRelaxDeps = [
+    "fastmcp"
+    "pydantic"
+  ];
 
   dependencies = with python3Packages; [
     mcp
@@ -33,13 +36,13 @@ python3Packages.buildPythonApplication rec {
 
   doCheck = false;
 
-  pythonImportsCheck = ["mcp_server_qdrant"];
+  pythonImportsCheck = [ "mcp_server_qdrant" ];
 
   meta = {
     description = "Model Context Protocol Server for Qdrant";
     homepage = "https://github.com/qdrant/mcp-server-qdrant";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [vaporif];
+    maintainers = with lib.maintainers; [ vaporif ];
     mainProgram = "mcp-server-qdrant";
     # Inherit platform restrictions from fastembed due to ONNX Runtime issues
     inherit (python3Packages.fastembed.meta) platforms badPlatforms;

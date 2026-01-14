@@ -1,4 +1,5 @@
-{mkServerModule, ...}: {
+{ mkServerModule, ... }:
+{
   imports = [
     (mkServerModule {
       name = "qdrant";
