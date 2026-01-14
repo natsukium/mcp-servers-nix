@@ -2,7 +2,10 @@
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
   outputs =
-    { self, nixpkgs }:
+    {
+      self,
+      nixpkgs,
+    }:
     let
       inherit (nixpkgs) lib;
       forAllSystems = lib.genAttrs [
@@ -34,7 +37,11 @@
             };
           }
         ))
-        self.packages
+        # Filter out packages with badPlatforms to avoid evaluation failures in CI
+        (forAllSystems (
+          system:
+          lib.filterAttrs (_: pkg: lib.meta.availableOn { inherit system; } pkg) self.packages.${system}
+        ))
       ];
     };
 }
