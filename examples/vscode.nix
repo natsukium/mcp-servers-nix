@@ -11,7 +11,7 @@ let
       github = {
         enable = true;
         env = {
-          GITHUB_PERSONAL_ACCESS_TOKEN = ''''${input:github_token}'';
+          GITHUB_PERSONAL_ACCESS_TOKEN = "\${input:github_token}";
         };
       };
     };
