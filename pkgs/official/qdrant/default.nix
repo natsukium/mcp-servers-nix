@@ -28,6 +28,7 @@ python3Packages.buildPythonApplication rec {
     fastembed
     qdrant-client
     fastmcp
+    lupa # required by fakeredis via pydocket via fastmcp
   ];
 
   doCheck = false;
