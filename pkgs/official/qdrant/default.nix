@@ -17,7 +17,7 @@ python3Packages.buildPythonApplication rec {
 
   build-system = [python3Packages.hatchling];
 
-  pythonRelaxDeps = ["fastmcp"];
+  pythonRelaxDeps = ["fastmcp" "pydantic"];
 
   dependencies = with python3Packages; [
     mcp
