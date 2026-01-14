@@ -35,7 +35,11 @@ in
   github-mcp-server = warnRemoved "github-mcp-server has been removed since it is now available in the nixpkgs 25.11 stable release";
   serena = pkgs.callPackage ./official/serena { };
   slite-mcp-server = pkgs.callPackage ./official/slite { };
-  mcp-qdrant = pkgs.callPackage ./official/qdrant { };
+  mcp-qdrant =
+    if pkgs.stdenv.hostPlatform.system == "aarch64-linux" then
+      lib.warn "mcp-qdrant is not available on aarch64-linux due to ONNX Runtime issues" pkgs.emptyFile
+    else
+      pkgs.callPackage ./official/qdrant { };
 
   # community servers
   clickup-mcp-server = warnRemoved "clickup-mcp-server has been removed since upstream stopped distribution and switched to shareware";

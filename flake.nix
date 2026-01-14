@@ -37,11 +37,7 @@
             };
           }
         ))
-        # Filter out packages with badPlatforms to avoid evaluation failures in CI
-        (forAllSystems (
-          system:
-          lib.filterAttrs (_: pkg: lib.meta.availableOn { inherit system; } pkg) self.packages.${system}
-        ))
+        self.packages
       ];
     };
 }
