@@ -10,20 +10,22 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "serena";
-  version = "0.1.4-unstable-2026-01-06";
+  version = "0.1.4-unstable-2026-01-14";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "eb54e834b6da7a5e11f51c27afbcf55be92ae066";
-    hash = "sha256-kRptE0I3dIFViYAh6233UM64uVgvavEyPA5vXCfHXuM=";
+    rev = "dd3c97b81fd708dfeb1ac39ffc75cf6ab7caa679";
+    hash = "sha256-n39CSIsVLIAmJoPTLPM+D6vAAqilHLp01KqZMOxP0q8=";
   };
 
   # I'm not sure why upstream uses blib2to3, such an ancient and unmaintained package
   postPatch = ''
     substituteInPlace test/conftest.py \
       --replace-fail "from blib2to3.pgen2.parse import contextmanager" "from contextlib import contextmanager"
+    substituteInPlace src/solidlsp/language_servers/pyright_server.py \
+      --replace-fail "python -m pyright.langserver --stdio" "${lib.getExe' pyright "pyright-langserver"} --stdio"
   '';
 
   build-system = [ python3Packages.hatchling ];
@@ -40,6 +42,7 @@ python3Packages.buildPythonApplication rec {
 
   dependencies = with python3Packages; [
     anthropic
+    beautifulsoup4
     docstring-parser
     flask
     fortls
@@ -50,7 +53,6 @@ python3Packages.buildPythonApplication rec {
     pathspec
     psutil
     pydantic
-    pyright
     python-dotenv
     pyyaml
     requests
