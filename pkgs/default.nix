@@ -28,6 +28,7 @@ in
   # official servers
   context7-mcp = pkgs.callPackage ./official/context7 { };
   deepl-mcp-server = pkgs.callPackage ./official/deepl { };
+  mastra-mcp-docs-server = pkgs.callPackage ./official/mastra { };
   tavily-mcp = pkgs.callPackage ./official/tavily { };
   mcp-grafana = warnRemoved "mcp-grafana has been removed since it is now available in the nixpkgs 25.11 stable release";
   notion-mcp-server = pkgs.callPackage ./official/notion { };
