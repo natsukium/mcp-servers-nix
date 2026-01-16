@@ -1,40 +1,70 @@
 {
   lib,
-  fetchurl,
-  buildNpmPackage,
+  stdenvNoCC,
+  fetchFromGitHub,
+  fetchPnpmDeps,
+  pnpmConfigHook,
+  pnpm_10,
   nodejs_22,
+  makeWrapper,
 }:
 
-buildNpmPackage (finalAttrs: {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "mastra-mcp-docs-server";
-  version = "1.0.0-beta.21";
+  version = "0.13.48";
 
-  src = fetchurl {
-    url = "https://registry.npmjs.org/@mastra/mcp-docs-server/-/mcp-docs-server-${finalAttrs.version}.tgz";
-    hash = "sha256-hO+0ExkSYUXKHQ7doR4S8igu7TvWe/UKm526NRrdqL8=";
+  src = fetchFromGitHub {
+    owner = "mastra-ai";
+    repo = "mastra";
+    rev = "0d63ec4dd389353b5d3cbad940ba674deaef0185";
+    hash = "sha256-e0jsdNsfjkqi14YPRZ53E11rmLccjOsGzxLbNm9Fu1w=";
   };
 
-  sourceRoot = "package";
+  pnpmWorkspaces = [ "@mastra/mcp-docs-server..." ];
 
-  postPatch = ''
-    cp ${./package.json} package.json
-    cp ${./package-lock.json} package-lock.json
+  pnpmDeps = fetchPnpmDeps {
+    inherit (finalAttrs) pname version src pnpmWorkspaces;
+    pnpm = pnpm_10;
+    fetcherVersion = 3;
+    hash = "sha256-RLBONh6Tw2Knp3+1a3mlqvMOhUOh2fWF21JTDsS6o3s=";
+  };
+
+  nativeBuildInputs = [
+    nodejs_22
+    pnpmConfigHook
+    pnpm_10
+    makeWrapper
+  ];
+
+  buildPhase = ''
+    runHook preBuild
+
+    # Use turbo to build with proper dependency ordering
+    # Exclude problematic internal tooling packages
+    pnpm turbo build \
+      --filter="@mastra/mcp-docs-server..." \
+      --filter="!@internal/external-types" \
+      --filter="!@internal/*"
+
+    runHook postBuild
   '';
 
-  nodejs = nodejs_22;
+  installPhase = ''
+    runHook preInstall
+    mkdir -p $out/{bin,lib/mastra-mcp-docs-server}
 
-  npmDepsHash = "sha256-BtzRb8SK6/GCBFGhTOOvlPPdwhaS0m66WO14ZAaijQI=";
+    # Copy node_modules and workspace packages to preserve symlinks
+    cp -r node_modules $out/lib/mastra-mcp-docs-server/
+    cp -r packages $out/lib/mastra-mcp-docs-server/
 
-  dontNpmBuild = true;
-
-  postInstall = ''
-    mv $out/bin/@mastra/mcp-docs-server $out/bin/mcp-docs-server
-    rmdir $out/bin/@mastra
+    makeWrapper ${nodejs_22}/bin/node $out/bin/mcp-server-mastra \
+      --add-flags "$out/lib/mastra-mcp-docs-server/packages/mcp-docs-server/dist/stdio.js"
+    runHook postInstall
   '';
 
   meta = {
     description = "Mastra MCP docs server - AI access to Mastra.ai documentation";
-    homepage = "https://www.npmjs.com/package/@mastra/mcp-docs-server";
+    homepage = "https://mastra.ai";
     license = lib.licenses.asl20;
     maintainers = [
       {
@@ -43,6 +73,6 @@ buildNpmPackage (finalAttrs: {
         name = "takeokunn";
       }
     ];
-    mainProgram = "mcp-docs-server";
+    mainProgram = "mcp-server-mastra";
   };
 })
