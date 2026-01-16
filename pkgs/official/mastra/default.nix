@@ -39,17 +39,25 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   buildPhase = ''
     runHook preBuild
 
-    # Disable turbo caching for reproducible Nix builds
-    # This prevents "cannot unlink directory not empty" errors in CI
+    # Disable turbo caching and daemon for reproducible Nix builds
+    # TURBO_FORCE: bypass cache for all tasks
+    # TURBO_NO_UPDATE_NOTIFIER: suppress update checks
+    # TURBO_DAEMON: disable daemon to prevent background processes holding file locks
+    # These settings prevent "cannot unlink directory not empty" errors on macOS CI
     export TURBO_FORCE=true
     export TURBO_NO_UPDATE_NOTIFIER=1
+    export TURBO_DAEMON=0
 
     # Use turbo to build with proper dependency ordering
     # Exclude problematic internal tooling packages
     pnpm turbo build \
       --filter="@mastra/mcp-docs-server..." \
       --filter="!@internal/external-types" \
-      --filter="!@internal/*"
+      --filter="!@internal/*" \
+      --no-daemon
+
+    # Clean up turbo cache directories to prevent cleanup failures
+    rm -rf .turbo node_modules/.cache/turbo || true
 
     runHook postBuild
   '';
