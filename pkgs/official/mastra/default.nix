@@ -39,6 +39,11 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   buildPhase = ''
     runHook preBuild
 
+    # Disable turbo caching for reproducible Nix builds
+    # This prevents "cannot unlink directory not empty" errors in CI
+    export TURBO_FORCE=true
+    export TURBO_NO_UPDATE_NOTIFIER=1
+
     # Use turbo to build with proper dependency ordering
     # Exclude problematic internal tooling packages
     pnpm turbo build \
