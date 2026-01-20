@@ -297,6 +297,7 @@ The framework includes modules for the following MCP servers:
 - [git](./modules/git.nix)
 - [github](./modules/github.nix)
 - [grafana](./modules/grafana.nix)
+- [mastra](./modules/mastra.nix)
 - [memory](./modules/memory.nix)
 - [nixos](./modules/nixos.nix)
 - [notion](./modules/notion.nix)
