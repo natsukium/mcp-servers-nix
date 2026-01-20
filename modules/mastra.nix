@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  mkServerModule,
-  ...
-}:
+{ mkServerModule, ... }:
 {
   imports = [
     (mkServerModule {
