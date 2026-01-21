@@ -26,6 +26,7 @@ in
   mcp-server-time = pkgs.callPackage ./reference/time.nix { };
 
   # official servers
+  azure-mcp-server = pkgs.callPackage ./official/azure { };
   context7-mcp = pkgs.callPackage ./official/context7 { };
   deepl-mcp-server = pkgs.callPackage ./official/deepl { };
   mastra-mcp-docs-server = pkgs.callPackage ./official/mastra { };
