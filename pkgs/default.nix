@@ -28,10 +28,13 @@ in
   # official servers
   context7-mcp = pkgs.callPackage ./official/context7 { };
   deepl-mcp-server = pkgs.callPackage ./official/deepl { };
+  fetch-mcp = pkgs.callPackage ./official/fetch { };
+  markitdown-mcp = pkgs.callPackage ./official/markitdown { };
   mastra-mcp-docs-server = pkgs.callPackage ./official/mastra { };
   tavily-mcp = pkgs.callPackage ./official/tavily { };
   mcp-grafana = warnRemoved "mcp-grafana has been removed since it is now available in the nixpkgs 25.11 stable release";
   notion-mcp-server = pkgs.callPackage ./official/notion { };
+  perplexity-mcp = pkgs.callPackage ./official/perplexity { };
   playwright-mcp = pkgs.callPackage ./official/playwright { };
   github-mcp-server = warnRemoved "github-mcp-server has been removed since it is now available in the nixpkgs 25.11 stable release";
   serena = pkgs.callPackage ./official/serena { };
@@ -39,4 +42,5 @@ in
 
   # community servers
   clickup-mcp-server = warnRemoved "clickup-mcp-server has been removed since upstream stopped distribution and switched to shareware";
+  forgejo-mcp = pkgs.callPackage ./community/forgejo { };
 }
