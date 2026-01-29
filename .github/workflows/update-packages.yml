@@ -12,6 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         package:
+          - esa-mcp-server
           - playwright-mcp
           - serena
     steps:

@@ -17,8 +17,6 @@ buildNpmPackage (finalAttrs: {
 
   npmDepsHash = "sha256-el5JrIGxoovXY2hDCiRYB2Z5yT067cElBK8J2eT/tuA=";
 
-  passthru.updateScript = ./update.sh;
-
   meta = {
     description = "Official MCP server for esa.io";
     homepage = "https://github.com/esaio/esa-mcp-server";
