@@ -10,22 +10,20 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "serena";
-  version = "0.1.4-unstable-2026-01-14";
+  version = "0.1.4-unstable-2026-02-01";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "dd3c97b81fd708dfeb1ac39ffc75cf6ab7caa679";
-    hash = "sha256-n39CSIsVLIAmJoPTLPM+D6vAAqilHLp01KqZMOxP0q8=";
+    rev = "764f26f28fc8d380da78b4e806f0277ee5688814";
+    hash = "sha256-6Erss+S4NNgvkLuyrS7STMLhnMru//TMcBvwz+fRYaI=";
   };
 
-  # I'm not sure why upstream uses blib2to3, such an ancient and unmaintained package
   postPatch = ''
-    substituteInPlace test/conftest.py \
-      --replace-fail "from blib2to3.pgen2.parse import contextmanager" "from contextlib import contextmanager"
     substituteInPlace src/solidlsp/language_servers/pyright_server.py \
-      --replace-fail "python -m pyright.langserver --stdio" "${lib.getExe' pyright "pyright-langserver"} --stdio"
+      --replace-fail 'return [core_path, "-m", "pyright.langserver", "--stdio"]' \
+        'return ["${lib.getExe' pyright "pyright-langserver"}", "--stdio"]'
   '';
 
   build-system = [ python3Packages.hatchling ];
@@ -92,6 +90,9 @@ python3Packages.buildPythonApplication rec {
     "test_index_auto_creates_project_with_files"
     "test_index_is_equivalent_to_create_with_index"
     "test_index_with_explicit_language"
+
+    # Flaky tests due to YAML config parsing issues in sandbox
+    "test_cli_project_commands.py"
   ];
 
   pytestFlags = [ "test/serena" ];

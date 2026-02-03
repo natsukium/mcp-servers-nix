@@ -28,6 +28,7 @@ in
   # official servers
   context7-mcp = pkgs.callPackage ./official/context7 { };
   deepl-mcp-server = pkgs.callPackage ./official/deepl { };
+  esa-mcp-server = pkgs.callPackage ./official/esa { };
   mastra-mcp-docs-server = pkgs.callPackage ./official/mastra { };
   metabase-mcp = pkgs.callPackage ./official/metabase { };
   tavily-mcp = pkgs.callPackage ./official/tavily { };
