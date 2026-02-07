@@ -299,6 +299,7 @@ The framework includes modules for the following MCP servers:
 - [grafana](./modules/grafana.nix)
 - [mastra](./modules/mastra.nix)
 - [memory](./modules/memory.nix)
+- [netdata](./modules/netdata.nix)
 - [nixos](./modules/nixos.nix)
 - [notion](./modules/notion.nix)
 - [playwright](./modules/playwright.nix)
