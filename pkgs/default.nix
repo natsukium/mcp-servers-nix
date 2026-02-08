@@ -29,6 +29,8 @@ in
   context7-mcp = pkgs.callPackage ./official/context7 { };
   deepl-mcp-server = pkgs.callPackage ./official/deepl { };
   esa-mcp-server = pkgs.callPackage ./official/esa { };
+  fetch-mcp = pkgs.callPackage ./official/fetch { };
+  markitdown-mcp = pkgs.callPackage ./official/markitdown { };
   mastra-mcp-docs-server = pkgs.callPackage ./official/mastra { };
   tavily-mcp = pkgs.callPackage ./official/tavily { };
   mcp-grafana = warnRemoved "mcp-grafana has been removed since it is now available in the nixpkgs 25.11 stable release";
