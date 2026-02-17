@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "mastra-ai";
     repo = "mastra";
-    rev = "0d63ec4dd389353b5d3cbad940ba674deaef0185";
+    tag = "@mastra/mcp-docs-server@${finalAttrs.version}";
     hash = "sha256-e0jsdNsfjkqi14YPRZ53E11rmLccjOsGzxLbNm9Fu1w=";
   };
 
@@ -87,13 +87,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "AI access to Mastra.ai documentation";
     homepage = "https://mastra.ai";
     license = lib.licenses.asl20;
-    maintainers = [
-      {
-        github = "takeokunn";
-        githubId = 11222510;
-        name = "takeokunn";
-      }
-    ];
+    maintainers = with lib.maintainers; [ takeokunn ];
     mainProgram = "mcp-server-mastra";
   };
 })
