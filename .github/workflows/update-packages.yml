@@ -44,8 +44,8 @@ jobs:
         run: |
           if [[ "${{ matrix.package }}" == "serena" ]]; then
             VERSION_FLAG="--version=branch"
-          else if [[ "${{ matrix.package }}" == "mastra-mcp-docs-server" ]]; then
-            VERSION_FLAG="--version-regex "@mastra/mcp-docs-server@(.*)"
+          elif [[ "${{ matrix.package }}" == "mastra-mcp-docs-server" ]]; then
+            VERSION_FLAG='--version-regex @mastra/mcp-docs-server@(.*)'
           else
             VERSION_FLAG=""
           fi
