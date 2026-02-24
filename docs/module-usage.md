@@ -211,6 +211,42 @@ Key features:
 
 See [`examples/devenv`](../examples/devenv) for a complete example.
 
+## Using Home Manager
+
+If you're using [home-manager](https://github.com/nix-community/home-manager), the home-manager module integrates with home-manager's centralized `programs.mcp` infrastructure. It maps configurations to `programs.mcp.servers`, which individual programs (claude-code, opencode, codex, vscode) consume via `enableMcpIntegration`.
+
+```nix
+# home.nix
+{ inputs, ... }:
+{
+  imports = [ inputs.mcp-servers-nix.homeManagerModules.default ];
+
+  programs.mcp.enable = true;
+
+  mcp-servers.programs = {
+    filesystem = {
+      enable = true;
+      args = [ "/home/user/documents" ];
+    };
+    playwright.enable = true;
+    context7.enable = true;
+  };
+
+  programs.claude-code = {
+    enable = true;
+    enableMcpIntegration = true;
+  };
+}
+```
+
+Key features:
+
+- **Declarative interface**: Same `programs.<name>.enable` interface as the flake-parts and devenv modules
+- **Native home-manager integration**: Outputs through `programs.mcp.servers` — each program handles its own config generation via `enableMcpIntegration`
+- **Credential wrapping**: `envFile` and `passwordCommand` work naturally since they produce Nix store paths
+
+See [`examples/home-manager`](../examples/home-manager) for a complete example.
+
 ## Adding Custom Servers
 
 Add MCP servers not included in this repository via `settings.servers`:

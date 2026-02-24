@@ -166,3 +166,7 @@ devShells.default = pkgs.mkShell {
 ## devenv Module Options
 
 The devenv module (`devenvModules.default`) provides `mcp-servers.programs` and `mcp-servers.settings` options — the same interface as the [flake-parts module](#flake-parts-module-options). It maps configurations to devenv's native `claude.code.mcpServers`.
+
+## Home Manager Module Options
+
+The home-manager module (`homeManagerModules.default`) provides `mcp-servers.programs` and `mcp-servers.settings` options — the same interface as the [flake-parts module](#flake-parts-module-options). It maps configurations to home-manager's `programs.mcp.servers`, which is the centralized MCP server registry consumed by individual programs via `enableMcpIntegration`. Users must set `programs.mcp.enable = true` separately.
