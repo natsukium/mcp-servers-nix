@@ -15,9 +15,9 @@
     {
       lib = import ./lib;
 
-      flakeModule = ./flake-module.nix;
+      flakeModule = ./modules/flake-parts.nix;
 
-      devenvModules.default = ./devenv-module.nix;
+      devenvModules.default = ./modules/devenv.nix;
 
       packages = forAllSystems (
         system: (import ./. { pkgs = import nixpkgs { inherit system; }; }).packages

@@ -185,7 +185,9 @@ let
         }
         {
           imports = (
-            builtins.map (module: ../modules + "/${module}") (builtins.attrNames (builtins.readDir ../modules))
+            builtins.map (module: ../modules/servers + "/${module}") (
+              builtins.attrNames (builtins.readDir ../modules/servers)
+            )
           );
         }
         config

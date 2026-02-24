@@ -20,7 +20,7 @@ in
       }:
       let
         cfg = config.mcp-servers;
-        mcp-lib = import ./lib;
+        mcp-lib = import ../lib;
 
         flavorNames = [
           "claude-code"
