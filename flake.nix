@@ -17,6 +17,8 @@
 
       flakeModule = ./flake-module.nix;
 
+      devenvModules.default = ./devenv-module.nix;
+
       packages = forAllSystems (
         system: (import ./. { pkgs = import nixpkgs { inherit system; }; }).packages
       );

@@ -162,3 +162,7 @@ devShells.default = pkgs.mkShell {
   '';
 };
 ```
+
+## devenv Module Options
+
+The devenv module (`devenvModules.default`) provides `mcp-servers.programs` and `mcp-servers.settings` options — the same interface as the [flake-parts module](#flake-parts-module-options). It maps configurations to devenv's native `claude.code.mcpServers`.

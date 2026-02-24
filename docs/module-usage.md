@@ -173,6 +173,44 @@ Key features:
 
 For the full list of flake-parts options, see [Configuration Reference](configuration-reference.md#flake-parts-module-options).
 
+## Using devenv
+
+If you're using [devenv](https://devenv.sh/), the devenv module integrates with devenv's built-in `claude.code.mcpServers` option. Instead of generating `.mcp.json` via shellHook, it outputs through devenv's native Claude Code support.
+
+```yaml
+# devenv.yaml
+inputs:
+  mcp-servers-nix:
+    url: github:natsukium/mcp-servers-nix
+```
+
+```nix
+# devenv.nix
+{ inputs, pkgs, ... }:
+{
+  imports = [ inputs.mcp-servers-nix.devenvModules.default ];
+
+  claude.code.enable = true;
+
+  mcp-servers.programs = {
+    filesystem = {
+      enable = true;
+      args = [ "." ];
+    };
+    playwright.enable = true;
+    context7.enable = true;
+  };
+}
+```
+
+Key features:
+
+- **Declarative interface**: Same `programs.<name>.enable` interface as the flake-parts module
+- **Native devenv integration**: Outputs through `claude.code.mcpServers` — devenv handles `.mcp.json` generation
+- **Credential wrapping**: `envFile` and `passwordCommand` work naturally since they produce Nix store paths
+
+See [`examples/devenv`](../examples/devenv) for a complete example.
+
 ## Adding Custom Servers
 
 Add MCP servers not included in this repository via `settings.servers`:

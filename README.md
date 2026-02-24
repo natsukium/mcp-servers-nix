@@ -12,6 +12,7 @@ This repository provides both MCP server packages and a Nix framework for config
 - **Reproducible Builds**: Leverage Nix for reproducible and declarative server setups
 - **Pre-configured Modules**: Ready-to-use configurations for popular MCP server types
 - **Security-focused**: Better handling credentials and sensitive information through `envFile` and `passwordCommand`, with pinned server versions
+- **Framework Support**: Integrates with [Flakes](docs/module-usage.md#using-flakes), [flake-parts](docs/module-usage.md#using-flake-parts), and [devenv](docs/module-usage.md#using-devenv)
 
 ## Quick Start
 
@@ -105,6 +106,7 @@ Check the `examples` directory for complete configuration examples:
 - [`opencode.nix`](./examples/opencode.nix): OpenCode CLI integration with MCP servers
 - [`vscode-workspace`](./examples/vscode-workspace/flake.nix): VS Code workspace configuration example
 - [`flake-parts-module`](./examples/flake-parts-module/flake.nix): Flake-parts module integration with multi-flavor support
+- [`devenv`](./examples/devenv): devenv integration using `claude.code.mcpServers`
 
 ### Real World Examples
 
