@@ -22,7 +22,7 @@ let
     lib.evalModules {
       modules = [
         mockDevenvModule
-        ../devenv-module.nix
+        ../modules/devenv.nix
         {
           _module.args = {
             inherit pkgs;

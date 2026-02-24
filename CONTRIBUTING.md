@@ -5,10 +5,12 @@
 ```
 .
 ├── flake.nix            # Flake entry point
-├── flake-module.nix     # Flake-parts module
 ├── default.nix          # Classic Nix entry point
 ├── lib/                 # Core library (mkConfig, evalModule, mkServerModule)
-├── modules/             # Module definitions for each MCP server
+├── modules/
+│   ├── flake-parts.nix  # Flake-parts integration module
+│   ├── devenv.nix       # devenv integration module
+│   └── servers/         # Module definitions for each MCP server
 ├── pkgs/                # Package definitions
 │   ├── official/        # Upstream official server packages
 │   ├── reference/       # Reference implementation packages
@@ -76,14 +78,14 @@ Then register it in `pkgs/default.nix`:
 
 ## Adding a Module
 
-Modules live in `modules/` and define how an MCP server is configured. The `mkServerModule` helper provides a consistent set of options (enable, package, args, env, url, headers, envFile, passwordCommand) for every server.
+Modules live in `modules/servers/` and define how an MCP server is configured. The `mkServerModule` helper provides a consistent set of options (enable, package, args, env, url, headers, envFile, passwordCommand) for every server.
 
 ### Basic Module
 
 For servers that need no special configuration beyond the standard options:
 
 ```nix
-# modules/new-mcp-server.nix
+# modules/servers/new-mcp-server.nix
 { mkServerModule, ... }:
 {
   imports = [ (mkServerModule { name = "new-mcp-server"; }) ];
@@ -97,7 +99,7 @@ The `name` parameter maps to `programs.<name>`, and the package defaults to `mcp
 When a server requires fixed arguments:
 
 ```nix
-# modules/github.nix
+# modules/servers/github.nix
 { config, lib, mkServerModule, ... }:
 let
   cfg = config.programs.github;
@@ -123,7 +125,7 @@ in
 For servers that expose additional configuration:
 
 ```nix
-# modules/playwright.nix
+# modules/servers/playwright.nix
 { config, pkgs, lib, mkServerModule, ... }:
 let
   cfg = config.programs.playwright;
@@ -160,7 +162,7 @@ in
 
 ### Complex Module
 
-For servers with validation, dynamic packages, or generated configuration files, see [`modules/textlint.nix`](./modules/textlint.nix) as a reference. It demonstrates:
+For servers with validation, dynamic packages, or generated configuration files, see [`modules/servers/textlint.nix`](./modules/servers/textlint.nix) as a reference. It demonstrates:
 
 - Conditional package composition (`withPackages`)
 - Generated configuration files from Nix attributes
@@ -170,10 +172,10 @@ For servers with validation, dynamic packages, or generated configuration files,
 
 | Complexity | Example | Key Pattern |
 |-----------|---------|-------------|
-| Minimal | [`modules/fetch.nix`](./modules/fetch.nix) | `mkServerModule` only |
-| Args override | [`modules/github.nix`](./modules/github.nix) | Fixed arguments |
-| Custom options | [`modules/playwright.nix`](./modules/playwright.nix) | Platform-dependent defaults |
-| Complex | [`modules/textlint.nix`](./modules/textlint.nix) | Dynamic packages, assertions, generated config |
+| Minimal | [`modules/servers/fetch.nix`](./modules/servers/fetch.nix) | `mkServerModule` only |
+| Args override | [`modules/servers/github.nix`](./modules/servers/github.nix) | Fixed arguments |
+| Custom options | [`modules/servers/playwright.nix`](./modules/servers/playwright.nix) | Platform-dependent defaults |
+| Complex | [`modules/servers/textlint.nix`](./modules/servers/textlint.nix) | Dynamic packages, assertions, generated config |
 
 ## Testing
 

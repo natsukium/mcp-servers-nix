@@ -10,7 +10,7 @@
   ...
 }:
 let
-  mcp-lib = import ./lib;
+  mcp-lib = import ../lib;
   cfg = config.mcp-servers;
 
   evaluated = mcp-lib.evalModule pkgs {
