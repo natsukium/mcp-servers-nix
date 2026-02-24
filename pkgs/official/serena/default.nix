@@ -10,14 +10,14 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "serena";
-  version = "0.1.4-unstable-2026-02-23";
+  version = "0.1.4-unstable-2026-02-24";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "1e89449f407d8fccf2be6fcd71585eb99892c52b";
-    hash = "sha256-VJLP/OfS2QPIXZKwbbFpYs4G/aE9nPjGo7qwWu5bMLU=";
+    rev = "e7a562aa4d1c2e656b04db58446611f051569059";
+    hash = "sha256-6UBOo5BOjmLh929AyRK6gaRIYcaPxkvUp6DQ7oS0+9o=";
   };
 
   postPatch = ''
