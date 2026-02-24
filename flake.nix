@@ -19,6 +19,8 @@
 
       devenvModules.default = ./modules/devenv.nix;
 
+      homeManagerModules.default = ./modules/home-manager.nix;
+
       packages = forAllSystems (
         system: (import ./. { pkgs = import nixpkgs { inherit system; }; }).packages
       );
