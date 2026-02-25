@@ -82,6 +82,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [fluxcd-operator](./modules/servers/fluxcd-operator.nix)
 - [forgejo](./modules/servers/forgejo.nix)
 - [git](./modules/servers/git.nix)
+- [gitea](./modules/servers/gitea.nix)
 - [github](./modules/servers/github.nix)
 - [grafana](./modules/servers/grafana.nix)
 - [mastra](./modules/servers/mastra.nix)
