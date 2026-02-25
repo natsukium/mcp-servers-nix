@@ -70,6 +70,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 
 ## Available Modules
 
+- [aks](./modules/servers/aks.nix)
 - [clickup](./modules/servers/clickup.nix)
 - [codex](./modules/servers/codex.nix)
 - [context7](./modules/servers/context7.nix)
