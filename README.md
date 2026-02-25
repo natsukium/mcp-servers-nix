@@ -79,6 +79,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [everything](./modules/servers/everything.nix)
 - [fetch](./modules/servers/fetch.nix)
 - [filesystem](./modules/servers/filesystem.nix)
+- [fluxcd-operator](./modules/servers/fluxcd-operator.nix)
 - [git](./modules/servers/git.nix)
 - [github](./modules/servers/github.nix)
 - [grafana](./modules/servers/grafana.nix)
