@@ -4571,6 +4571,344 @@ null
 
 
 
+## programs\.k8s\.enable
+
+
+
+Whether to enable k8s\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.package
+
+
+
+The mcp-k8s-go package to use\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+pkgs.mcp-k8s-go
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.allowedContexts
+
+
+
+Restrict access to specified Kubernetes contexts\.
+Empty list means all contexts are allowed\.
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.args
+
+
+
+Array of arguments passed to the command\.
+
+
+
+*Type:*
+list of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.env
+
+
+
+Environment variables for the server\.
+For security reasons, do not hardcode your credentials in the env\.
+All files in /nix/store can be read by anyone with access to the store\.
+Always use envFile instead\.
+
+
+
+*Type:*
+attribute set of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.envFile
+
+
+
+Path to an \.env from which to load additional environment variables\.
+When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.headers
+
+
+
+HTTP headers for authentication\.
+Used with “http” and “sse” transport types\.
+For security reasons, do not hardcode credentials in headers\.
+Use variable expansion syntax (e\.g\., ${VAR}) supported by the client\.
+Set environment variables before launching the client instead\.
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+
+
+*Example:*
+
+```nix
+{ Authorization = "Bearer \${API_TOKEN}"; }
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.maskSecrets
+
+
+
+Mask sensitive data in output\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.passwordCommand
+
+
+
+Command to execute to retrieve secrets\. Can be specified in two ways:
+
+ 1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
+    Example: “pass mcp-server”
+
+ 2. As an attribute set: Keys are environment variable names and values are command lists that output the value\.
+    Example: { GITHUB_PERSONAL_ACCESS_TOKEN = \[ “gh” “auth” “token” ]; }
+
+This is useful for integrating with password managers or similar tools\.
+passwordCommand is always handled via the wrapper regardless of flavor\.
+
+
+
+*Type:*
+null or string or attribute set of list of string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+{
+  GITHUB_PERSONAL_ACCESS_TOKEN = [
+    "gh"
+    "auth"
+    "token"
+  ];
+}
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.readOnly
+
+
+
+Disable write operations to the cluster\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.type
+
+
+
+Server connection type\.
+
+
+
+*Type:*
+null or one of “http”, “sse”, “stdio”
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.url
+
+
+
+URL of the server (for “http” and “sse”)\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
 ## programs\.mastra\.enable
 
 
@@ -5475,8 +5813,6 @@ attribute set of (boolean or signed integer or string)
 
 ## programs\.nixos\.envFile
 
-
-
 Path to an \.env from which to load additional environment variables\.
 When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
 
@@ -5801,6 +6137,8 @@ attribute set of string
 
 
 ## programs\.notion\.passwordCommand
+
+
 
 Command to execute to retrieve secrets\. Can be specified in two ways:
 

@@ -86,6 +86,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [github](./modules/servers/github.nix)
 - [grafana](./modules/servers/grafana.nix)
 - [ha](./modules/servers/ha.nix)
+- [k8s](./modules/servers/k8s.nix)
 - [mastra](./modules/servers/mastra.nix)
 - [memory](./modules/servers/memory.nix)
 - [netdata](./modules/servers/netdata.nix)
