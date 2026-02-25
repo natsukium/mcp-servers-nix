@@ -60,7 +60,7 @@ in
   inherit (optionsDoc) optionsCommonMark;
 
   check = pkgs.runCommand "check-module-options-doc" { } ''
-    if ! ${pkgs.diffutils}/bin/diff -q ${optionsDoc.optionsCommonMark} ${../docs/module-options.md}; then
+    if ! ${pkgs.diffutils}/bin/diff -u ${../docs/module-options.md} ${optionsDoc.optionsCommonMark}; then
       echo "docs/module-options.md is out of date."
       echo "Run: nix build -f docs/options-doc.nix optionsCommonMark && install -m 644 result docs/module-options.md"
       exit 1
