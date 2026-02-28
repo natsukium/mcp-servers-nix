@@ -92,6 +92,319 @@ one of “json”, “yaml”, “toml”, “toml-inline”
 
 
 
+## programs\.aks\.enable
+
+
+
+Whether to enable aks\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.enabledComponents
+
+
+
+List of enabled components\. Empty list means all components are enabled\.
+
+
+
+*Type:*
+list of (one of “az_cli”, “monitor”, “fleet”, “network”, “compute”, “detectors”, “advisor”, “inspektorgadget”, “kubectl”, “helm”, “cilium”, “hubble”)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.package
+
+
+
+The aks-mcp-server package to use\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+pkgs.aks-mcp-server
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.accessLevel
+
+
+
+Access level for AKS operations\.
+
+
+
+*Type:*
+one of “readonly”, “readwrite”, “admin”
+
+
+
+*Default:*
+
+```nix
+"readonly"
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.args
+
+
+
+Array of arguments passed to the command\.
+
+
+
+*Type:*
+list of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.env
+
+
+
+Environment variables for the server\.
+For security reasons, do not hardcode your credentials in the env\.
+All files in /nix/store can be read by anyone with access to the store\.
+Always use envFile instead\.
+
+
+
+*Type:*
+attribute set of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.envFile
+
+
+
+Path to an \.env from which to load additional environment variables\.
+When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.headers
+
+
+
+HTTP headers for authentication\.
+Used with “http” and “sse” transport types\.
+For security reasons, do not hardcode credentials in headers\.
+Use variable expansion syntax (e\.g\., ${VAR}) supported by the client\.
+Set environment variables before launching the client instead\.
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+
+
+*Example:*
+
+```nix
+{ Authorization = "Bearer \${API_TOKEN}"; }
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.passwordCommand
+
+
+
+Command to execute to retrieve secrets\. Can be specified in two ways:
+
+ 1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
+    Example: “pass mcp-server”
+
+ 2. As an attribute set: Keys are environment variable names and values are command lists that output the value\.
+    Example: { GITHUB_PERSONAL_ACCESS_TOKEN = \[ “gh” “auth” “token” ]; }
+
+This is useful for integrating with password managers or similar tools\.
+passwordCommand is always handled via the wrapper regardless of flavor\.
+
+
+
+*Type:*
+null or string or attribute set of list of string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+{
+  GITHUB_PERSONAL_ACCESS_TOKEN = [
+    "gh"
+    "auth"
+    "token"
+  ];
+}
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.type
+
+
+
+Server connection type\.
+
+
+
+*Type:*
+null or one of “http”, “sse”, “stdio”
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
+## programs\.aks\.url
+
+
+
+URL of the server (for “http” and “sse”)\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/aks\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/aks.nix)
+
+
+
 ## programs\.clickup\.enable
 
 
@@ -2212,6 +2525,654 @@ null
 
 
 
+## programs\.fluxcd-operator\.enable
+
+
+
+Whether to enable fluxcd-operator\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.package
+
+
+
+The fluxcd-operator-mcp package to use\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+pkgs.fluxcd-operator-mcp
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.args
+
+
+
+Array of arguments passed to the command\.
+
+
+
+*Type:*
+list of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.env
+
+
+
+Environment variables for the server\.
+For security reasons, do not hardcode your credentials in the env\.
+All files in /nix/store can be read by anyone with access to the store\.
+Always use envFile instead\.
+
+
+
+*Type:*
+attribute set of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.envFile
+
+
+
+Path to an \.env from which to load additional environment variables\.
+When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.headers
+
+
+
+HTTP headers for authentication\.
+Used with “http” and “sse” transport types\.
+For security reasons, do not hardcode credentials in headers\.
+Use variable expansion syntax (e\.g\., ${VAR}) supported by the client\.
+Set environment variables before launching the client instead\.
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+
+
+*Example:*
+
+```nix
+{ Authorization = "Bearer \${API_TOKEN}"; }
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.kubeContext
+
+
+
+Specific Kubernetes context to use\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.maskSecrets
+
+
+
+Mask sensitive data in server output\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.namespace
+
+
+
+Target Kubernetes namespace\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.passwordCommand
+
+
+
+Command to execute to retrieve secrets\. Can be specified in two ways:
+
+ 1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
+    Example: “pass mcp-server”
+
+ 2. As an attribute set: Keys are environment variable names and values are command lists that output the value\.
+    Example: { GITHUB_PERSONAL_ACCESS_TOKEN = \[ “gh” “auth” “token” ]; }
+
+This is useful for integrating with password managers or similar tools\.
+passwordCommand is always handled via the wrapper regardless of flavor\.
+
+
+
+*Type:*
+null or string or attribute set of list of string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+{
+  GITHUB_PERSONAL_ACCESS_TOKEN = [
+    "gh"
+    "auth"
+    "token"
+  ];
+}
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.readOnly
+
+
+
+Disable write/delete operations\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.type
+
+
+
+Server connection type\.
+
+
+
+*Type:*
+null or one of “http”, “sse”, “stdio”
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.fluxcd-operator\.url
+
+
+
+URL of the server (for “http” and “sse”)\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/fluxcd-operator\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/fluxcd-operator.nix)
+
+
+
+## programs\.forgejo\.enable
+
+
+
+Whether to enable forgejo\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
+## programs\.forgejo\.package
+
+
+
+The forgejo-mcp package to use\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+pkgs.forgejo-mcp
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
+## programs\.forgejo\.args
+
+Array of arguments passed to the command\.
+
+
+
+*Type:*
+list of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
+## programs\.forgejo\.env
+
+
+
+Environment variables for the server\.
+For security reasons, do not hardcode your credentials in the env\.
+All files in /nix/store can be read by anyone with access to the store\.
+Always use envFile instead\.
+
+
+
+*Type:*
+attribute set of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
+## programs\.forgejo\.envFile
+
+
+
+Path to an \.env from which to load additional environment variables\.
+When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
+## programs\.forgejo\.headers
+
+
+
+HTTP headers for authentication\.
+Used with “http” and “sse” transport types\.
+For security reasons, do not hardcode credentials in headers\.
+Use variable expansion syntax (e\.g\., ${VAR}) supported by the client\.
+Set environment variables before launching the client instead\.
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+
+
+*Example:*
+
+```nix
+{ Authorization = "Bearer \${API_TOKEN}"; }
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
+## programs\.forgejo\.instanceUrl
+
+
+
+URL of the Forgejo instance\.
+
+
+
+*Type:*
+string
+
+
+
+*Example:*
+
+```nix
+"https://codeberg.org"
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
+## programs\.forgejo\.passwordCommand
+
+
+
+Command to execute to retrieve secrets\. Can be specified in two ways:
+
+ 1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
+    Example: “pass mcp-server”
+
+ 2. As an attribute set: Keys are environment variable names and values are command lists that output the value\.
+    Example: { GITHUB_PERSONAL_ACCESS_TOKEN = \[ “gh” “auth” “token” ]; }
+
+This is useful for integrating with password managers or similar tools\.
+passwordCommand is always handled via the wrapper regardless of flavor\.
+
+
+
+*Type:*
+null or string or attribute set of list of string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+{
+  GITHUB_PERSONAL_ACCESS_TOKEN = [
+    "gh"
+    "auth"
+    "token"
+  ];
+}
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
+## programs\.forgejo\.type
+
+
+
+Server connection type\.
+
+
+
+*Type:*
+null or one of “http”, “sse”, “stdio”
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
+## programs\.forgejo\.url
+
+
+
+URL of the server (for “http” and “sse”)\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/forgejo\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/forgejo.nix)
+
+
+
 ## programs\.git\.enable
 
 
@@ -2474,6 +3435,319 @@ null
 
 *Declared by:*
  - [\<mcp-servers-nix/modules/servers/git\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/git.nix)
+
+
+
+## programs\.gitea\.enable
+
+
+
+Whether to enable gitea\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.package
+
+
+
+The gitea-mcp-server package to use\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+pkgs.gitea-mcp-server
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.args
+
+
+
+Array of arguments passed to the command\.
+
+
+
+*Type:*
+list of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.env
+
+
+
+Environment variables for the server\.
+For security reasons, do not hardcode your credentials in the env\.
+All files in /nix/store can be read by anyone with access to the store\.
+Always use envFile instead\.
+
+
+
+*Type:*
+attribute set of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.envFile
+
+
+
+Path to an \.env from which to load additional environment variables\.
+When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.headers
+
+
+
+HTTP headers for authentication\.
+Used with “http” and “sse” transport types\.
+For security reasons, do not hardcode credentials in headers\.
+Use variable expansion syntax (e\.g\., ${VAR}) supported by the client\.
+Set environment variables before launching the client instead\.
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+
+
+*Example:*
+
+```nix
+{ Authorization = "Bearer \${API_TOKEN}"; }
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.host
+
+
+
+URL of the Gitea instance\.
+
+
+
+*Type:*
+string
+
+
+
+*Default:*
+
+```nix
+"https://gitea.com"
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.passwordCommand
+
+
+
+Command to execute to retrieve secrets\. Can be specified in two ways:
+
+ 1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
+    Example: “pass mcp-server”
+
+ 2. As an attribute set: Keys are environment variable names and values are command lists that output the value\.
+    Example: { GITHUB_PERSONAL_ACCESS_TOKEN = \[ “gh” “auth” “token” ]; }
+
+This is useful for integrating with password managers or similar tools\.
+passwordCommand is always handled via the wrapper regardless of flavor\.
+
+
+
+*Type:*
+null or string or attribute set of list of string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+{
+  GITHUB_PERSONAL_ACCESS_TOKEN = [
+    "gh"
+    "auth"
+    "token"
+  ];
+}
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.readOnly
+
+
+
+Enable read-only mode\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.type
+
+
+
+Server connection type\.
+
+
+
+*Type:*
+null or one of “http”, “sse”, “stdio”
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
+
+
+
+## programs\.gitea\.url
+
+
+
+URL of the server (for “http” and “sse”)\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/gitea\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/gitea.nix)
 
 
 
@@ -2913,6 +4187,8 @@ attribute set of string
 
 ## programs\.grafana\.passwordCommand
 
+
+
 Command to execute to retrieve secrets\. Can be specified in two ways:
 
  1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
@@ -3002,6 +4278,634 @@ null
 
 *Declared by:*
  - [\<mcp-servers-nix/modules/servers/grafana\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/grafana.nix)
+
+
+
+## programs\.ha\.enable
+
+
+
+Whether to enable ha\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.ha\.enabledToolModules
+
+
+
+Filter which tool modules are available\.
+Empty list means all modules are enabled\.
+
+
+
+*Type:*
+list of (one of “all”, “automation”, “search”, “device_control”)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.ha\.package
+
+
+
+The ha-mcp package to use\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+pkgs.ha-mcp
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.ha\.args
+
+
+
+Array of arguments passed to the command\.
+
+
+
+*Type:*
+list of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.ha\.env
+
+
+
+Environment variables for the server\.
+For security reasons, do not hardcode your credentials in the env\.
+All files in /nix/store can be read by anyone with access to the store\.
+Always use envFile instead\.
+
+
+
+*Type:*
+attribute set of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.ha\.envFile
+
+
+
+Path to an \.env from which to load additional environment variables\.
+When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.ha\.headers
+
+
+
+HTTP headers for authentication\.
+Used with “http” and “sse” transport types\.
+For security reasons, do not hardcode credentials in headers\.
+Use variable expansion syntax (e\.g\., ${VAR}) supported by the client\.
+Set environment variables before launching the client instead\.
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+
+
+*Example:*
+
+```nix
+{ Authorization = "Bearer \${API_TOKEN}"; }
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.ha\.passwordCommand
+
+
+
+Command to execute to retrieve secrets\. Can be specified in two ways:
+
+ 1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
+    Example: “pass mcp-server”
+
+ 2. As an attribute set: Keys are environment variable names and values are command lists that output the value\.
+    Example: { GITHUB_PERSONAL_ACCESS_TOKEN = \[ “gh” “auth” “token” ]; }
+
+This is useful for integrating with password managers or similar tools\.
+passwordCommand is always handled via the wrapper regardless of flavor\.
+
+
+
+*Type:*
+null or string or attribute set of list of string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+{
+  GITHUB_PERSONAL_ACCESS_TOKEN = [
+    "gh"
+    "auth"
+    "token"
+  ];
+}
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.ha\.type
+
+
+
+Server connection type\.
+
+
+
+*Type:*
+null or one of “http”, “sse”, “stdio”
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.ha\.url
+
+
+
+URL of the server (for “http” and “sse”)\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/ha\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/ha.nix)
+
+
+
+## programs\.k8s\.enable
+
+
+
+Whether to enable k8s\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.package
+
+
+
+The mcp-k8s-go package to use\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+pkgs.mcp-k8s-go
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.allowedContexts
+
+
+
+Restrict access to specified Kubernetes contexts\.
+Empty list means all contexts are allowed\.
+
+
+
+*Type:*
+list of string
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.args
+
+
+
+Array of arguments passed to the command\.
+
+
+
+*Type:*
+list of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.env
+
+
+
+Environment variables for the server\.
+For security reasons, do not hardcode your credentials in the env\.
+All files in /nix/store can be read by anyone with access to the store\.
+Always use envFile instead\.
+
+
+
+*Type:*
+attribute set of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.envFile
+
+
+
+Path to an \.env from which to load additional environment variables\.
+When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.headers
+
+
+
+HTTP headers for authentication\.
+Used with “http” and “sse” transport types\.
+For security reasons, do not hardcode credentials in headers\.
+Use variable expansion syntax (e\.g\., ${VAR}) supported by the client\.
+Set environment variables before launching the client instead\.
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+
+
+*Example:*
+
+```nix
+{ Authorization = "Bearer \${API_TOKEN}"; }
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.maskSecrets
+
+
+
+Mask sensitive data in output\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.passwordCommand
+
+
+
+Command to execute to retrieve secrets\. Can be specified in two ways:
+
+ 1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
+    Example: “pass mcp-server”
+
+ 2. As an attribute set: Keys are environment variable names and values are command lists that output the value\.
+    Example: { GITHUB_PERSONAL_ACCESS_TOKEN = \[ “gh” “auth” “token” ]; }
+
+This is useful for integrating with password managers or similar tools\.
+passwordCommand is always handled via the wrapper regardless of flavor\.
+
+
+
+*Type:*
+null or string or attribute set of list of string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+{
+  GITHUB_PERSONAL_ACCESS_TOKEN = [
+    "gh"
+    "auth"
+    "token"
+  ];
+}
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.readOnly
+
+
+
+Disable write operations to the cluster\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.type
+
+
+
+Server connection type\.
+
+
+
+*Type:*
+null or one of “http”, “sse”, “stdio”
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
+
+
+
+## programs\.k8s\.url
+
+
+
+URL of the server (for “http” and “sse”)\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/k8s\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/k8s.nix)
 
 
 
@@ -3909,8 +5813,6 @@ attribute set of (boolean or signed integer or string)
 
 ## programs\.nixos\.envFile
 
-
-
 Path to an \.env from which to load additional environment variables\.
 When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
 
@@ -4327,6 +6229,271 @@ null
 
 *Declared by:*
  - [\<mcp-servers-nix/modules/servers/notion\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/notion.nix)
+
+
+
+## programs\.perplexity\.enable
+
+
+
+Whether to enable perplexity\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/perplexity\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/perplexity.nix)
+
+
+
+## programs\.perplexity\.package
+
+
+
+The perplexity-mcp package to use\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+pkgs.perplexity-mcp
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/perplexity\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/perplexity.nix)
+
+
+
+## programs\.perplexity\.args
+
+
+
+Array of arguments passed to the command\.
+
+
+
+*Type:*
+list of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/perplexity\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/perplexity.nix)
+
+
+
+## programs\.perplexity\.env
+
+
+
+Environment variables for the server\.
+For security reasons, do not hardcode your credentials in the env\.
+All files in /nix/store can be read by anyone with access to the store\.
+Always use envFile instead\.
+
+
+
+*Type:*
+attribute set of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/perplexity\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/perplexity.nix)
+
+
+
+## programs\.perplexity\.envFile
+
+
+
+Path to an \.env from which to load additional environment variables\.
+When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/perplexity\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/perplexity.nix)
+
+
+
+## programs\.perplexity\.headers
+
+
+
+HTTP headers for authentication\.
+Used with “http” and “sse” transport types\.
+For security reasons, do not hardcode credentials in headers\.
+Use variable expansion syntax (e\.g\., ${VAR}) supported by the client\.
+Set environment variables before launching the client instead\.
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+
+
+*Example:*
+
+```nix
+{ Authorization = "Bearer \${API_TOKEN}"; }
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/perplexity\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/perplexity.nix)
+
+
+
+## programs\.perplexity\.passwordCommand
+
+
+
+Command to execute to retrieve secrets\. Can be specified in two ways:
+
+ 1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
+    Example: “pass mcp-server”
+
+ 2. As an attribute set: Keys are environment variable names and values are command lists that output the value\.
+    Example: { GITHUB_PERSONAL_ACCESS_TOKEN = \[ “gh” “auth” “token” ]; }
+
+This is useful for integrating with password managers or similar tools\.
+passwordCommand is always handled via the wrapper regardless of flavor\.
+
+
+
+*Type:*
+null or string or attribute set of list of string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+{
+  GITHUB_PERSONAL_ACCESS_TOKEN = [
+    "gh"
+    "auth"
+    "token"
+  ];
+}
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/perplexity\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/perplexity.nix)
+
+
+
+## programs\.perplexity\.type
+
+
+
+Server connection type\.
+
+
+
+*Type:*
+null or one of “http”, “sse”, “stdio”
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/perplexity\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/perplexity.nix)
+
+
+
+## programs\.perplexity\.url
+
+
+
+URL of the server (for “http” and “sse”)\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/perplexity\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/perplexity.nix)
 
 
 
@@ -5875,6 +8042,8 @@ list of (boolean or signed integer or string)
 
 ## programs\.terraform\.env
 
+
+
 Environment variables for the server\.
 For security reasons, do not hardcode your credentials in the env\.
 All files in /nix/store can be read by anyone with access to the store\.
@@ -6468,8 +8637,6 @@ true
 
 
 ## programs\.time\.package
-
-
 
 The mcp-server-time package to use\.
 

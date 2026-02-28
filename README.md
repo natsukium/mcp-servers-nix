@@ -70,6 +70,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 
 ## Available Modules
 
+- [aks](./modules/servers/aks.nix)
 - [clickup](./modules/servers/clickup.nix)
 - [codex](./modules/servers/codex.nix)
 - [context7](./modules/servers/context7.nix)
@@ -78,14 +79,20 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [everything](./modules/servers/everything.nix)
 - [fetch](./modules/servers/fetch.nix)
 - [filesystem](./modules/servers/filesystem.nix)
+- [fluxcd-operator](./modules/servers/fluxcd-operator.nix)
+- [forgejo](./modules/servers/forgejo.nix)
 - [git](./modules/servers/git.nix)
+- [gitea](./modules/servers/gitea.nix)
 - [github](./modules/servers/github.nix)
 - [grafana](./modules/servers/grafana.nix)
+- [ha](./modules/servers/ha.nix)
+- [k8s](./modules/servers/k8s.nix)
 - [mastra](./modules/servers/mastra.nix)
 - [memory](./modules/servers/memory.nix)
 - [netdata](./modules/servers/netdata.nix)
 - [nixos](./modules/servers/nixos.nix)
 - [notion](./modules/servers/notion.nix)
+- [perplexity](./modules/servers/perplexity.nix)
 - [playwright](./modules/servers/playwright.nix)
 - [sequential-thinking](./modules/servers/sequential-thinking.nix)
 - [serena](./modules/servers/serena.nix)
