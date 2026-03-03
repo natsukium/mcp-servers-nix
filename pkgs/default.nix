@@ -29,6 +29,7 @@ in
   context7-mcp = pkgs.callPackage ./official/context7 { };
   deepl-mcp-server = pkgs.callPackage ./official/deepl { };
   esa-mcp-server = pkgs.callPackage ./official/esa { };
+  freee-mcp = pkgs.callPackage ./official/freee { };
   mastra-mcp-docs-server = pkgs.callPackage ./official/mastra { };
   nd-mcp = pkgs.callPackage ./official/netdata { };
   tavily-mcp = pkgs.callPackage ./official/tavily { };

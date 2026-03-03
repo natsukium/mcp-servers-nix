@@ -13,6 +13,7 @@ jobs:
       matrix:
         package:
           - esa-mcp-server
+          - freee-mcp
           - nd-mcp
           - playwright-mcp
           - serena
