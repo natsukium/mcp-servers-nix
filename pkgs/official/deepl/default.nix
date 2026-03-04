@@ -6,16 +6,16 @@
 
 buildNpmPackage rec {
   pname = "deepl-mcp-server";
-  version = "1.0.1-unstable-2025-12-11";
+  version = "1.1.0-unstable-2026-01-28";
 
   src = fetchFromGitHub {
     owner = "DeepLcom";
     repo = "deepl-mcp-server";
-    rev = "0099c19386bce816c55e441c5e05d28968dd0d3b";
-    hash = "sha256-9w9Pk5uncyjvgK6wlfqk+Ema2AsCWBzKt+DKgZJW+n4=";
+    rev = "55b1f3637391f795f9c3fbb32bd7ca67b875cc83";
+    hash = "sha256-8P581j+oa6G9oCqQyeEeBIWCxtHTN/TkciQBDaU1hBA=";
   };
 
-  npmDepsHash = "sha256-4zDEx3qPDUnYkYCwoWlSjTBeFo2B2TIfOBQc2olGtPo=";
+  npmDepsHash = "sha256-VLlqfO3z0gs8cZgdWaZVz+bNSi0pgU1RF/JZy+SzRhs=";
 
   dontNpmBuild = true;
 

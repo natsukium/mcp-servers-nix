@@ -20,15 +20,17 @@ in
       }:
       let
         cfg = config.mcp-servers;
-        mcp-lib = import ./lib;
+        mcp-lib = import ../lib;
 
         flavorNames = [
           "claude-code"
+          "opencode"
           "vscode-workspace"
         ];
 
         flavorFormatMap = {
           claude-code = "json";
+          opencode = "json";
           vscode-workspace = "json";
         };
 
@@ -87,6 +89,7 @@ in
             fileName =
               {
                 claude-code = ".mcp.json";
+                opencode = "opencode.json";
                 vscode-workspace = ".vscode/mcp.json";
               }
               .${flavor};

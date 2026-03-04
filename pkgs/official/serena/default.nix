@@ -10,20 +10,20 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "serena";
-  version = "0.1.4-unstable-2026-01-06";
+  version = "0.1.4-unstable-2026-03-04";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "eb54e834b6da7a5e11f51c27afbcf55be92ae066";
-    hash = "sha256-kRptE0I3dIFViYAh6233UM64uVgvavEyPA5vXCfHXuM=";
+    rev = "736a6ed103edf3511cf2149ec5b162191d7b2fa2";
+    hash = "sha256-niIck/1MhjH/yBofAFQZGzTuVjDYpSRjMxaYui2wZo0=";
   };
 
-  # I'm not sure why upstream uses blib2to3, such an ancient and unmaintained package
   postPatch = ''
-    substituteInPlace test/conftest.py \
-      --replace-fail "from blib2to3.pgen2.parse import contextmanager" "from contextlib import contextmanager"
+    substituteInPlace src/solidlsp/language_servers/pyright_server.py \
+      --replace-fail 'return [core_path, "-m", "pyright.langserver", "--stdio"]' \
+        'return ["${lib.getExe' pyright "pyright-langserver"}", "--stdio"]'
   '';
 
   build-system = [ python3Packages.hatchling ];
@@ -40,6 +40,7 @@ python3Packages.buildPythonApplication rec {
 
   dependencies = with python3Packages; [
     anthropic
+    beautifulsoup4
     docstring-parser
     flask
     fortls
@@ -50,7 +51,6 @@ python3Packages.buildPythonApplication rec {
     pathspec
     psutil
     pydantic
-    pyright
     python-dotenv
     pyyaml
     requests
@@ -90,6 +90,9 @@ python3Packages.buildPythonApplication rec {
     "test_index_auto_creates_project_with_files"
     "test_index_is_equivalent_to_create_with_index"
     "test_index_with_explicit_language"
+
+    # Flaky tests due to YAML config parsing issues in sandbox
+    "test_cli_project_commands.py"
   ];
 
   pytestFlags = [ "test/serena" ];

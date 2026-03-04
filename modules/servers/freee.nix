@@ -2,8 +2,8 @@
 {
   imports = [
     (mkServerModule {
-      name = "slite";
-      packageName = "slite-mcp-server";
+      name = "freee";
+      packageName = "freee-mcp";
     })
   ];
 }

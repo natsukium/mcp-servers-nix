@@ -6,11 +6,11 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "slite-mcp-server";
-  version = "1.2.0";
+  version = "1.3.0";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/slite-mcp-server/-/slite-mcp-server-${finalAttrs.version}.tgz";
-    hash = "sha256-mcpEOZRu+Yog+2EldlwMS86+Fwzvx7v0KVwQZjzQRU0=";
+    hash = "sha256-UeqQfTaRq2Wiu9R4Fonr6mM3Jrr3bhzrA3tRL+1HhBU=";
   };
 
   sourceRoot = "package";
@@ -19,7 +19,7 @@ buildNpmPackage (finalAttrs: {
     cp ${./package-lock.json} package-lock.json
   '';
 
-  npmDepsHash = "sha256-dS8IMTevO5yqKj85sE7R2LC0ddTViW3vVSRvPr6bcJg=";
+  npmDepsHash = "sha256-BgZdkEJn48DsOEiL0anme/HBFdyNUxU0zNlbH3dyYFo=";
 
   dontNpmBuild = true;
 

@@ -150,7 +150,9 @@ let
         lib.mkIf cfg.enable {
           ${name} = lib.filterAttrs (k: v: v != null) (
             {
-              command = lib.mkDefault "${lib.getExe package}";
+              # Remote transports (http/sse) don't need a local command
+              command =
+                if (cfg.type == "http" || cfg.type == "sse") then null else lib.mkDefault "${lib.getExe package}";
               inherit (cfg)
                 args
                 env
@@ -183,7 +185,9 @@ let
         }
         {
           imports = (
-            builtins.map (module: ../modules + "/${module}") (builtins.attrNames (builtins.readDir ../modules))
+            builtins.map (module: ../modules/servers + "/${module}") (
+              builtins.attrNames (builtins.readDir ../modules/servers)
+            )
           );
         }
         config

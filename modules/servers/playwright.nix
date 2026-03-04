@@ -24,6 +24,12 @@ in
           lib.getExe pkgs.google-chrome
         else
           lib.getExe pkgs.chromium;
+      defaultText = lib.literalExpression ''
+        if pkgs.stdenv.hostPlatform.isDarwin then
+          lib.getExe pkgs.google-chrome
+        else
+          lib.getExe pkgs.chromium
+      '';
     };
   };
 

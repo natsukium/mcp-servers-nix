@@ -12,8 +12,12 @@ jobs:
       fail-fast: false
       matrix:
         package:
+          - esa-mcp-server
+          - freee-mcp
+          - nd-mcp
           - playwright-mcp
           - serena
+          - slite-mcp-server
     steps:
       - name: Generate GitHub App token
         id: app-token
@@ -22,7 +26,7 @@ jobs:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ steps.app-token.outputs.token }}
           persist-credentials: false
@@ -41,13 +45,17 @@ jobs:
         id: update-package
         run: |
           if [[ "${{ matrix.package }}" == "serena" ]]; then
-            VERSION_FLAG="--version=branch"
+            NIX_UPDATE_FLAGS="--version=branch"
+          elif [[ "${{ matrix.package }}" == "mastra-mcp-docs-server" ]]; then
+            NIX_UPDATE_FLAGS='--version-regex @mastra/mcp-docs-server@(.*)'
+          elif [[ "${{ matrix.package }}" == "slite-mcp-server" ]]; then
+            NIX_UPDATE_FLAGS='--generate-lockfile'
           else
-            VERSION_FLAG=""
+            NIX_UPDATE_FLAGS=""
           fi
 
           OUTPUT=$(nix run nixpkgs#nix-update \
-            -- --flake ${{ matrix.package }} $VERSION_FLAG --print-commit-message)
+            -- --flake ${{ matrix.package }} $NIX_UPDATE_FLAGS --print-commit-message)
 
           # Extract title (first line containing package name)
           COMMIT_TITLE=$(echo "$OUTPUT" | grep -E "^${{ matrix.package }}:" | head -1)
@@ -62,7 +70,7 @@ jobs:
 
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@98357b18bf14b5342f975ff684046ec3b2a07725 # v8.0.0
+        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # v8.1.0
         with:
           token: ${{ steps.app-token.outputs.token }}
           branch: auto-update/${{ matrix.package }}
