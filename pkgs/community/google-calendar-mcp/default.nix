@@ -21,7 +21,7 @@ buildNpmPackage rec {
     description = "MCP integration for Google Calendar to manage events";
     homepage = "https://github.com/nspady/google-calendar-mcp";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = with lib.maintainers; [ antono ];
     mainProgram = "google-calendar-mcp";
   };
 }
