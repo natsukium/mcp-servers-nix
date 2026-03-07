@@ -81,6 +81,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [freee](./modules/servers/freee.nix)
 - [git](./modules/servers/git.nix)
 - [github](./modules/servers/github.nix)
+- [google-calendar](./modules/servers/google-calendar.nix)
 - [grafana](./modules/servers/grafana.nix)
 - [mastra](./modules/servers/mastra.nix)
 - [memory](./modules/servers/memory.nix)
