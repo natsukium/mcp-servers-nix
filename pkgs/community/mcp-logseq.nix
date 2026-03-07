@@ -29,6 +29,12 @@ python3Packages.buildPythonApplication rec {
 
   pythonImportsCheck = [ "mcp_logseq" ];
 
+  # mcp-logseq tries to create a log directory in HOME and checks for LOGSEQ_API_TOKEN during import
+  postInstall = ''
+    export HOME=$TMPDIR
+    export LOGSEQ_API_TOKEN="placeholder"
+  '';
+
   meta = {
     description = "MCP server to interact with LogSeq via its Local HTTP API";
     homepage = "https://github.com/ergut/mcp-logseq";
