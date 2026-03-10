@@ -41,5 +41,6 @@ in
   slite-mcp-server = pkgs.callPackage ./official/slite { };
 
   # community servers
+  google-calendar-mcp = pkgs.callPackage ./community/google-calendar-mcp { };
   clickup-mcp-server = warnRemoved "clickup-mcp-server has been removed since upstream stopped distribution and switched to shareware";
 }
