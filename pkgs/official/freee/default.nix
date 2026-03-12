@@ -12,13 +12,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "freee-mcp";
-  version = "0.11.1";
+  version = "0.11.2";
 
   src = fetchFromGitHub {
     owner = "freee";
     repo = "freee-mcp";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-1wJts3V7DCtmZ2RGRfcr4gsNifxJW3hr9F4JH6arHaU=";
+    hash = "sha256-jrehBO/uCqUVT1k66gemMa2PLoyCwnth+5B+LLSfMUg=";
   };
 
   pnpmDeps = fetchPnpmDeps {
