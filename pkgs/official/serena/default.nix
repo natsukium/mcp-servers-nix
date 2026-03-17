@@ -16,8 +16,8 @@ python3Packages.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "e357323051a54507302d3256ab980018a6f34e67";
-    hash = "sha256-P19SI7yCNxsQe1bHl9NH4MRvSt2mX9+ktYBJqmCXwsU=";
+    rev = "6a16b5b9e9a03eab33ff21eb9976c845a5c30ab4";
+    hash = "sha256-sa6FsLPv0ObvA3uLZKafjpcNTM4rf8W3kaaiokXd47U=";
   };
 
   postPatch = ''
