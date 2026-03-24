@@ -6,16 +6,16 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "esa-mcp-server";
-  version = "0.6.0";
+  version = "0.6.1";
 
   src = fetchFromGitHub {
     owner = "esaio";
     repo = "esa-mcp-server";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-hPMJsqhNHr7pXVHDH8sK+ln2QZkUrLREVjJ0vTzrfFM=";
+    hash = "sha256-vdCseP96uJ+rrFmyOwi+lTyAKPFtFc6/EssbiIybKbY=";
   };
 
-  npmDepsHash = "sha256-LghKCbG2aB3L62pHQA+MAcIXD9UwuFv69zThmmznJKY=";
+  npmDepsHash = "sha256-8EoqfApQSRIw/TvmveOL1Mpa1r6DskOMRl53AKRab2k=";
 
   meta = {
     description = "Official MCP server for esa.io";
