@@ -41,5 +41,6 @@ in
   slite-mcp-server = pkgs.callPackage ./official/slite { };
 
   # community servers
+  chrome-devtools-mcp = pkgs.callPackage ./community/chrome-devtools { };
   clickup-mcp-server = warnRemoved "clickup-mcp-server has been removed since upstream stopped distribution and switched to shareware";
 }
