@@ -5502,6 +5502,271 @@ null
 
 
 
+## programs\.signoz\.enable
+
+
+
+Whether to enable signoz\.
+
+
+
+*Type:*
+boolean
+
+
+
+*Default:*
+
+```nix
+false
+```
+
+
+
+*Example:*
+
+```nix
+true
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/signoz\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/signoz.nix)
+
+
+
+## programs\.signoz\.package
+
+
+
+The signoz-mcp-server package to use\.
+
+
+
+*Type:*
+package
+
+
+
+*Default:*
+
+```nix
+pkgs.signoz-mcp-server
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/signoz\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/signoz.nix)
+
+
+
+## programs\.signoz\.args
+
+
+
+Array of arguments passed to the command\.
+
+
+
+*Type:*
+list of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+[ ]
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/signoz\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/signoz.nix)
+
+
+
+## programs\.signoz\.env
+
+
+
+Environment variables for the server\.
+For security reasons, do not hardcode your credentials in the env\.
+All files in /nix/store can be read by anyone with access to the store\.
+Always use envFile instead\.
+
+
+
+*Type:*
+attribute set of (boolean or signed integer or string)
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/signoz\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/signoz.nix)
+
+
+
+## programs\.signoz\.envFile
+
+
+
+Path to an \.env from which to load additional environment variables\.
+When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
+
+
+
+*Type:*
+null or absolute path
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/signoz\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/signoz.nix)
+
+
+
+## programs\.signoz\.headers
+
+
+
+HTTP headers for authentication\.
+Used with “http” and “sse” transport types\.
+For security reasons, do not hardcode credentials in headers\.
+Use variable expansion syntax (e\.g\., ${VAR}) supported by the client\.
+Set environment variables before launching the client instead\.
+
+
+
+*Type:*
+attribute set of string
+
+
+
+*Default:*
+
+```nix
+{ }
+```
+
+
+
+*Example:*
+
+```nix
+{ Authorization = "Bearer \${API_TOKEN}"; }
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/signoz\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/signoz.nix)
+
+
+
+## programs\.signoz\.passwordCommand
+
+
+
+Command to execute to retrieve secrets\. Can be specified in two ways:
+
+ 1. As a string: The command should output in the format “KEY=VALUE” which will be exported as environment variables\.
+    Example: “pass mcp-server”
+
+ 2. As an attribute set: Keys are environment variable names and values are command lists that output the value\.
+    Example: { GITHUB_PERSONAL_ACCESS_TOKEN = \[ “gh” “auth” “token” ]; }
+
+This is useful for integrating with password managers or similar tools\.
+passwordCommand is always handled via the wrapper regardless of flavor\.
+
+
+
+*Type:*
+null or string or attribute set of list of string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+
+
+*Example:*
+
+```nix
+{
+  GITHUB_PERSONAL_ACCESS_TOKEN = [
+    "gh"
+    "auth"
+    "token"
+  ];
+}
+
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/signoz\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/signoz.nix)
+
+
+
+## programs\.signoz\.type
+
+
+
+Server connection type\.
+
+
+
+*Type:*
+null or one of “http”, “sse”, “stdio”
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/signoz\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/signoz.nix)
+
+
+
+## programs\.signoz\.url
+
+
+
+URL of the server (for “http” and “sse”)\.
+
+
+
+*Type:*
+null or string
+
+
+
+*Default:*
+
+```nix
+null
+```
+
+*Declared by:*
+ - [\<mcp-servers-nix/modules/servers/signoz\.nix>](https://github.com/natsukium/mcp-servers-nix/blob/main/modules/servers/signoz.nix)
+
+
+
 ## programs\.slite\.enable
 
 
@@ -5610,8 +5875,6 @@ attribute set of (boolean or signed integer or string)
 
 
 ## programs\.slite\.envFile
-
-
 
 Path to an \.env from which to load additional environment variables\.
 When flavor is set to ‘vscode’, the environment file is passed directly as a parameter instead of wrapping by default\.
@@ -5874,6 +6137,8 @@ list of (boolean or signed integer or string)
 
 
 ## programs\.tavily\.env
+
+
 
 Environment variables for the server\.
 For security reasons, do not hardcode your credentials in the env\.

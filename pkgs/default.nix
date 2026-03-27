@@ -38,6 +38,7 @@ in
   playwright-mcp = pkgs.callPackage ./official/playwright { };
   github-mcp-server = warnRemoved "github-mcp-server has been removed since it is now available in the nixpkgs 25.11 stable release";
   serena = pkgs.callPackage ./official/serena { };
+  signoz-mcp-server = pkgs.callPackage ./official/signoz { };
   slite-mcp-server = pkgs.callPackage ./official/slite { };
 
   # community servers

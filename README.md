@@ -90,6 +90,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [playwright](./modules/servers/playwright.nix)
 - [sequential-thinking](./modules/servers/sequential-thinking.nix)
 - [serena](./modules/servers/serena.nix)
+- [signoz](./modules/servers/signoz.nix)
 - [slite](./modules/servers/slite.nix)
 - [tavily](./modules/servers/tavily.nix)
 - [terraform](./modules/servers/terraform.nix)
@@ -101,6 +102,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 Check the `examples` directory for complete configuration examples:
 
 - [`claude-desktop.nix`](./examples/claude-desktop.nix): Basic configuration for Claude Desktop
+- [`signoz.nix`](./examples/signoz.nix): SigNoz observability with passwordCommand
 - [`vscode.nix`](./examples/vscode.nix): VS Code integration setup
 - [`librechat.nix`](./examples/librechat.nix): Configuration for LibreChat integration
 - [`codex.nix`](./examples/codex.nix): Codex CLI integration with MCP servers
