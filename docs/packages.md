@@ -75,5 +75,4 @@ Add all MCP server packages to your nixpkgs via the provided overlay:
 | `notion-mcp-server` | Notion integration |
 | `playwright-mcp` | Playwright browser automation |
 | `serena` | Serena code intelligence |
-| `slite-mcp-server` | Slite knowledge base |
 | `tavily-mcp` | Tavily search |

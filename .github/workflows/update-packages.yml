@@ -17,7 +17,6 @@ jobs:
           - nd-mcp
           - playwright-mcp
           - serena
-          - slite-mcp-server
     steps:
       - name: Generate GitHub App token
         id: app-token
@@ -48,8 +47,6 @@ jobs:
             NIX_UPDATE_FLAGS="--version=branch"
           elif [[ "${{ matrix.package }}" == "mastra-mcp-docs-server" ]]; then
             NIX_UPDATE_FLAGS='--version-regex @mastra/mcp-docs-server@(.*)'
-          elif [[ "${{ matrix.package }}" == "slite-mcp-server" ]]; then
-            NIX_UPDATE_FLAGS='--generate-lockfile'
           else
             NIX_UPDATE_FLAGS=""
           fi

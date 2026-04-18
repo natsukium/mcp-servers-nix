@@ -134,9 +134,10 @@
         let
           extraConfig = lib.removeAttrs config.settings [ "servers" ];
           format = pkgs.formats.${config.format} { };
+          generated = format.generate config.fileName (
+            lib.recursiveUpdate (lib.setAttrByPath keys serverConfig) extraConfig
+          );
         in
-        format.generate config.fileName (
-          lib.recursiveUpdate (lib.setAttrByPath keys serverConfig) extraConfig
-        );
+        lib.asserts.checkAssertWarn config.assertions config.warnings generated;
     };
 }

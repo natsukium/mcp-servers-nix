@@ -6,4 +6,5 @@ builtins.removeAttrs packages [
   "mcp-grafana"
   "github-mcp-server"
   "clickup-mcp-server"
+  "slite-mcp-server"
 ]
