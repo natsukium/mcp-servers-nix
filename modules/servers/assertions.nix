@@ -5,12 +5,9 @@
 # The implementation is based on NixOS's assertions module:
 # https://github.com/NixOS/nixpkgs/blob/nixos-24.11/nixos/modules/misc/assertions.nix
 #
-# Currently, this only defines the options schema, but doesn't implement the actual
-# assertion checking functionality. This is needed as a placeholder to support
-# mkRemovedOptionModule and other validation functions that depend on these options.
-#
-# TODO: Implement the full assertion checking logic similar to NixOS's activation system.
-# Reference: <nixpkgs/nixos/modules/system/activation/top-level.nix>
+# The schema is declared here; the enforcement (throwing on failed assertions
+# and emitting warnings via lib.showWarnings) is wired into the generated
+# configFile in modules/servers/config.nix.
 
 { lib, ... }:
 {
