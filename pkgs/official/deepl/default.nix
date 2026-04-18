@@ -4,7 +4,7 @@
   buildNpmPackage,
 }:
 
-buildNpmPackage rec {
+buildNpmPackage (finalAttrs: {
   pname = "deepl-mcp-server";
   version = "1.1.0-unstable-2026-01-28";
 
@@ -26,4 +26,4 @@ buildNpmPackage rec {
     maintainers = with lib.maintainers; [ vaporif ];
     mainProgram = "deepl-mcp-server";
   };
-}
+})

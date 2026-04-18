@@ -9,11 +9,11 @@
   doCheck ? true,
   nativeCheckInputs ? [ python3Packages.pytestCheckHook ],
 }:
-python3Packages.buildPythonApplication rec {
+python3Packages.buildPythonApplication (finalAttrs: {
   pname = "mcp-server-${service}";
   inherit (import ./source.nix { inherit fetchFromGitHub; }) version src;
   pyproject = true;
-  sourceRoot = "${src.name}/src/${service}";
+  sourceRoot = "${finalAttrs.src.name}/src/${service}";
   inherit
     build-system
     dependencies
@@ -31,4 +31,4 @@ python3Packages.buildPythonApplication rec {
     maintainers = with lib.maintainers; [ natsukium ];
     mainProgram = "mcp-server-${service}";
   };
-}
+})

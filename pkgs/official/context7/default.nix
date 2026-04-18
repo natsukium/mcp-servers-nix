@@ -30,6 +30,8 @@ let
     dontFixup = true;
 
     installPhase = ''
+      runHook preInstall
+
       export HOME=$TMPDIR
 
       # Install dependencies
@@ -39,6 +41,8 @@ let
       mkdir -p $out
       cp -r node_modules $out/
       cp bun.lock package.json $out/
+
+      runHook postInstall
     '';
 
     # This hash represents the dependencies

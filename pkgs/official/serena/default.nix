@@ -8,7 +8,7 @@
   writableTmpDirAsHomeHook,
 }:
 
-python3Packages.buildPythonApplication rec {
+python3Packages.buildPythonApplication (finalAttrs: {
   pname = "serena";
   version = "0.1.4-unstable-2026-03-23";
   pyproject = true;
@@ -100,9 +100,9 @@ python3Packages.buildPythonApplication rec {
   meta = {
     description = "Powerful coding agent toolkit providing semantic retrieval and editing capabilities";
     homepage = "https://github.com/oraios/serena";
-    changelog = "https://github.com/oraios/serena/blob/v${version}/CHANGELOG.md";
+    changelog = "https://github.com/oraios/serena/blob/v${finalAttrs.version}/CHANGELOG.md";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ natsukium ];
     mainProgram = "serena";
   };
-}
+})

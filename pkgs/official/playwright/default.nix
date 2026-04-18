@@ -5,14 +5,14 @@
   versionCheckHook,
 }:
 
-buildNpmPackage rec {
+buildNpmPackage (finalAttrs: {
   pname = "playwright-mcp";
   version = "0.0.70";
 
   src = fetchFromGitHub {
     owner = "microsoft";
     repo = "playwright-mcp";
-    tag = "v${version}";
+    tag = "v${finalAttrs.version}";
     hash = "sha256-dvFFG+/cYy09RjEMDIWncTNCcyaKoKH52qweYq0HHxU=";
   };
 
@@ -35,9 +35,9 @@ buildNpmPackage rec {
   meta = {
     description = "Playwright MCP server";
     homepage = "https://github.com/microsoft/playwright-mcp";
-    changelog = "https://github.com/microsoft/playwright-mcp/releases/tag/v${version}";
+    changelog = "https://github.com/microsoft/playwright-mcp/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ natsukium ];
     mainProgram = "playwright-mcp";
   };
-}
+})
