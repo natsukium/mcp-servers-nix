@@ -27,6 +27,7 @@ in
         ];
       }
       ''
+        export CODEX_HOME=$(mktemp -d)
         codex -c "$(cat ${testConfig})" mcp list | grep -e filesystem > $out
       '';
 }
