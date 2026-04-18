@@ -38,7 +38,7 @@ in
   playwright-mcp = pkgs.callPackage ./official/playwright { };
   github-mcp-server = warnRemoved "github-mcp-server has been removed since it is now available in the nixpkgs 25.11 stable release";
   serena = pkgs.callPackage ./official/serena { };
-  slite-mcp-server = pkgs.callPackage ./official/slite { };
+  slite-mcp-server = warnRemoved "slite-mcp-server has been removed since upstream stopped distribution in favor of the hosted MCP server at https://api.slite.com/mcp";
 
   # community servers
   clickup-mcp-server = warnRemoved "clickup-mcp-server has been removed since upstream stopped distribution and switched to shareware";
