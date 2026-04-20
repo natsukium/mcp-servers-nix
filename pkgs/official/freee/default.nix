@@ -2,43 +2,68 @@
   lib,
   stdenvNoCC,
   fetchFromGitHub,
-  fetchPnpmDeps,
-  pnpmConfigHook,
-  pnpm_10,
-  nodejs,
-  nodejs-slim,
+  bun,
   makeBinaryWrapper,
+  nix-update-script,
+  nodejs-slim,
 }:
 
-stdenvNoCC.mkDerivation (finalAttrs: {
-  pname = "freee-mcp";
-  version = "0.12.1";
+let
+  version = "0.24.0";
 
   src = fetchFromGitHub {
     owner = "freee";
     repo = "freee-mcp";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-n6pADwrofMPD30KHP7hCLPGF2OiaedsSDG89JZkDWeA=";
+    tag = "v${version}";
+    hash = "sha256-dQLlJ8eWXByX0Pb9VfH5abYBAmLDKheKWLiOTC5a74U=";
   };
 
-  pnpmDeps = fetchPnpmDeps {
-    inherit (finalAttrs) pname version src;
-    pnpm = pnpm_10;
-    fetcherVersion = 3;
-    hash = "sha256-0ocvfqTkaj7+BY9p+rs89juV2X6TJCrAUgTJoIGv1W4=";
+  deps = stdenvNoCC.mkDerivation {
+    pname = "freee-mcp-deps";
+    inherit version src;
+
+    nativeBuildInputs = [ bun ];
+
+    dontBuild = true;
+    dontFixup = true;
+
+    installPhase = ''
+      runHook preInstall
+
+      export HOME=$TMPDIR
+
+      bun install --frozen-lockfile --no-cache --ignore-scripts --production
+
+      mkdir -p $out
+      cp -r node_modules $out/
+      cp bun.lock package.json $out/
+
+      runHook postInstall
+    '';
+
+    outputHash = "sha256-YUf3P7nhClb4yEmO8955AT+gg8Va9ZHpx6H1Zpk/uCw=";
+    outputHashAlgo = "sha256";
+    outputHashMode = "recursive";
   };
+in
+stdenvNoCC.mkDerivation {
+  pname = "freee-mcp";
+  inherit version src;
 
   nativeBuildInputs = [
-    nodejs
-    pnpmConfigHook
-    pnpm_10
+    bun
     makeBinaryWrapper
   ];
 
   buildPhase = ''
     runHook preBuild
 
-    pnpm build
+    export HOME=$TMPDIR
+
+    cp -r ${deps}/node_modules .
+    cp ${deps}/bun.lock .
+
+    bun run build
 
     runHook postBuild
   '';
@@ -49,18 +74,30 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     mkdir -p $out/{bin,lib/freee-mcp}
     cp -r bin dist node_modules package.json $out/lib/freee-mcp/
 
-    makeWrapper ${nodejs-slim}/bin/node $out/bin/freee-mcp \
-      --add-flags "$out/lib/freee-mcp/bin/cli.js"
+    for cmd in freee-mcp freee-remote-mcp freee-sign-mcp; do
+      makeBinaryWrapper ${nodejs-slim}/bin/node $out/bin/$cmd \
+        --add-flags "$out/lib/freee-mcp/bin/$cmd.js"
+    done
 
     runHook postInstall
   '';
 
+  passthru = {
+    inherit deps;
+    updateScript = nix-update-script {
+      extraArgs = [
+        "--subpackage"
+        "deps"
+      ];
+    };
+  };
+
   meta = {
     description = "Model Context Protocol (MCP) server for freee API integration";
     homepage = "https://github.com/freee/freee-mcp";
-    changelog = "https://github.com/freee/freee-mcp/blob/${finalAttrs.src.rev}/CHANGELOG.md";
+    changelog = "https://github.com/freee/freee-mcp/blob/v${version}/CHANGELOG.md";
     license = lib.licenses.asl20;
     maintainers = with lib.maintainers; [ natsukium ];
     mainProgram = "freee-mcp";
   };
-})
+}
