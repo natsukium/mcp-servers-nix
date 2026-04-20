@@ -71,8 +71,9 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/{bin,lib/freee-mcp}
+    mkdir -p $out/{bin,lib/freee-mcp,share}
     cp -r bin dist node_modules package.json $out/lib/freee-mcp/
+    cp -r skills $out/share/
 
     for cmd in freee-mcp freee-remote-mcp freee-sign-mcp; do
       makeBinaryWrapper ${nodejs-slim}/bin/node $out/bin/$cmd \
