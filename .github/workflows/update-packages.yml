@@ -47,6 +47,8 @@ jobs:
             NIX_UPDATE_FLAGS="--version=branch"
           elif [[ "${{ matrix.package }}" == "mastra-mcp-docs-server" ]]; then
             NIX_UPDATE_FLAGS='--version-regex @mastra/mcp-docs-server@(.*)'
+          elif [[ "${{ matrix.package }}" == "freee-mcp" ]]; then
+            NIX_UPDATE_FLAGS="--subpackage deps"
           else
             NIX_UPDATE_FLAGS=""
           fi
