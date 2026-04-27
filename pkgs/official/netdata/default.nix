@@ -6,13 +6,13 @@
 
 buildGoModule (finalAttrs: {
   pname = "nd-mcp";
-  version = "2.10.2";
+  version = "2.10.3";
 
   src = fetchFromGitHub {
     owner = "netdata";
     repo = "netdata";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-eKaETazPztRabFugRsYeNAeofBdDltB51fkfDbZPK5Q=";
+    hash = "sha256-ufnoYszdu1vlhgit9jj9P8ugfUSdkWsll/BFyzXrELs=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/src/web/mcp/bridges/stdio-golang";
