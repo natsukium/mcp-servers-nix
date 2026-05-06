@@ -1,131 +1,77 @@
 {
   lib,
-  stdenv,
+  stdenvNoCC,
   fetchFromGitHub,
-  bun,
-  makeWrapper,
+  fetchPnpmDeps,
+  pnpmConfigHook,
+  pnpm_10,
   nodejs-slim,
+  makeBinaryWrapper,
+  nix-update-script,
 }:
 
-# TODO: would be great to remove this once nixpkgs
-# has native build bun packages derivation
-let
-  version = "1.0.26";
+stdenvNoCC.mkDerivation (finalAttrs: {
+  pname = "context7-mcp";
+  version = "2.2.4";
 
   src = fetchFromGitHub {
     owner = "upstash";
     repo = "context7";
-    tag = "v${version}";
-    hash = "sha256-sOyZwYB9WlPfzbrQW+krf2QDoWzei+wMJvohGi+C6B0=";
+    tag = "@upstash/context7-mcp@${finalAttrs.version}";
+    hash = "sha256-FiOzc1jkx7XUBgMpfOIPBa8H44Th4pOuUQ0WQfjE5z4=";
   };
 
-  # Step 1: Fixed-output derivation for dependencies
-  deps = stdenv.mkDerivation {
-    pname = "context7-mcp-deps";
-    inherit version src;
+  pnpmWorkspaces = [ "@upstash/context7-mcp" ];
 
-    nativeBuildInputs = [ bun ];
-
-    dontBuild = true;
-    dontFixup = true;
-
-    # The cache is populated alongside node_modules so the main installPhase
-    # can re-resolve with --production offline.
-    #
-    # --backend=copyfile avoids hardlinks from node_modules into the cache,
-    # which would otherwise create disallowed self-references in the FOD.
-    #
-    # bun also stores symlinks like cache/<pkg>/<ver>@@@1 pointing at absolute
-    # paths under $BUN_INSTALL_CACHE_DIR. The sandbox $TMPDIR differs across
-    # build hosts, making the output non-deterministic, so rewrite them to
-    # relative paths after copying.
-    installPhase = ''
-      runHook preInstall
-
-      export HOME=$TMPDIR
-      export BUN_INSTALL_CACHE_DIR=$TMPDIR/bun-cache
-
-      bun install --frozen-lockfile --backend=copyfile
-
-      mkdir -p $out
-      cp -r node_modules $out/
-      cp -r $BUN_INSTALL_CACHE_DIR $out/cache
-      cp bun.lock package.json $out/
-
-      find $out/cache -type l -lname "$BUN_INSTALL_CACHE_DIR/*" | while read -r link; do
-        target=$(readlink "$link")
-        rel_in_cache=''${target#$BUN_INSTALL_CACHE_DIR/}
-        rel_to_cache=$(realpath --relative-to="$(dirname "$link")" "$out/cache")
-        ln -sfn "$rel_to_cache/$rel_in_cache" "$link"
-      done
-
-      runHook postInstall
-    '';
-
-    # This hash represents the dependencies
-    outputHash = "sha256-oHvXY8H9bFOjL1kUC61hoZ2JtgDjx9etd1iMaWb9pRE=";
-    outputHashAlgo = "sha256";
-    outputHashMode = "recursive";
+  pnpmDeps = fetchPnpmDeps {
+    inherit (finalAttrs)
+      pname
+      version
+      src
+      pnpmWorkspaces
+      ;
+    pnpm = pnpm_10;
+    fetcherVersion = 3;
+    hash = "sha256-b4qPRk6FaKo1IamUf2esAUnBwxfxWRD/LV7u4L/u6u0=";
   };
-
-  # Step 2: Main build derivation
-in
-stdenv.mkDerivation {
-  pname = "context7-mcp";
-  inherit version src;
 
   nativeBuildInputs = [
-    bun
-    makeWrapper
+    nodejs-slim
+    pnpmConfigHook
+    pnpm_10
+    makeBinaryWrapper
   ];
 
   buildPhase = ''
     runHook preBuild
 
-    export HOME=$TMPDIR
-
-    cp -r ${deps}/node_modules .
-    chmod -R u+w node_modules
-    cp ${deps}/bun.lock .
-
-    substituteInPlace node_modules/.bin/tsc \
-      --replace-fail "/usr/bin/env node" "${lib.getExe nodejs-slim}"
-
-    bun run build
+    pnpm --filter @upstash/context7-mcp build
 
     runHook postBuild
   '';
 
-  # bun lacks a `prune` command (https://github.com/oven-sh/bun/issues/3605),
-  # so wipe the dev node_modules and re-resolve with `--production` using the
-  # deps FOD's cache to drop devDependencies without hitting the network.
+  # Re-resolve with `--prod --filter` to drop devDependencies and unrelated
+  # workspace packages (sdk, tools-ai-sdk, cli) from the runtime closure.
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/lib/context7-mcp
+    rm -rf node_modules packages/*/node_modules
+    pnpm install --prod --offline --frozen-lockfile --filter @upstash/context7-mcp
 
-    cp -r dist $out/lib/context7-mcp/
+    mkdir -p $out/bin $out/lib/context7-mcp
+    cp -r node_modules packages $out/lib/context7-mcp/
 
-    export HOME=$TMPDIR
-    export BUN_INSTALL_CACHE_DIR=${deps}/cache
-    rm -rf node_modules
-    bun install --production --frozen-lockfile --backend=copyfile
-
-    cp -r node_modules $out/lib/context7-mcp/
-    cp package.json $out/lib/context7-mcp/
-
-    chmod +x $out/lib/context7-mcp/dist/index.js
-
-    mkdir -p $out/bin
-    makeWrapper $out/lib/context7-mcp/dist/index.js $out/bin/context7-mcp \
-      --prefix PATH : ${lib.makeBinPath [ nodejs-slim ]} \
+    makeBinaryWrapper ${nodejs-slim}/bin/node $out/bin/context7-mcp \
+      --add-flags "$out/lib/context7-mcp/packages/mcp/dist/index.js"
 
     runHook postInstall
   '';
 
-  passthru = {
-    inherit deps;
-    updateScript = ./update.sh;
+  passthru.updateScript = nix-update-script {
+    extraArgs = [
+      "--version-regex"
+      "@upstash/context7-mcp@(.*)"
+    ];
   };
 
   meta = {
@@ -142,4 +88,4 @@ stdenv.mkDerivation {
     ];
     mainProgram = "context7-mcp";
   };
-}
+})
