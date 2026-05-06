@@ -12,6 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         package:
+          - context7-mcp
           - esa-mcp-server
           - freee-mcp
           - nd-mcp
@@ -49,6 +50,8 @@ jobs:
             NIX_UPDATE_FLAGS='--version-regex @mastra/mcp-docs-server@(.*)'
           elif [[ "${{ matrix.package }}" == "freee-mcp" ]]; then
             NIX_UPDATE_FLAGS="--subpackage deps"
+          elif [[ "${{ matrix.package }}" == "context7-mcp" ]]; then
+            NIX_UPDATE_FLAGS='--version-regex @upstash/context7-mcp@(.*)'
           else
             NIX_UPDATE_FLAGS=""
           fi
