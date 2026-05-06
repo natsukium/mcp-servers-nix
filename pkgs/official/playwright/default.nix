@@ -7,26 +7,18 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "playwright-mcp";
-  version = "0.0.70";
+  version = "0.0.73";
 
   src = fetchFromGitHub {
     owner = "microsoft";
     repo = "playwright-mcp";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-dvFFG+/cYy09RjEMDIWncTNCcyaKoKH52qweYq0HHxU=";
+    hash = "sha256-Hxxq4hvtbQ9u6i/C8GhZXCwgmRqAxExBpKUAFIVzKj8=";
   };
 
-  npmDepsHash = "sha256-tyVigQYA/viB8Ycg++SfPF6WEWWulnfuJXZYOBGhhOQ=";
-
-  npmWorkspace = "packages/playwright-mcp";
+  npmDepsHash = "sha256-s7Stnezmw8nh361yFjiNRWKpCCObprzx3dSKEFgrWec=";
 
   dontNpmBuild = true;
-
-  # npm workspace symlinks (e.g. node_modules/@playwright/mcp -> ../../packages/playwright-mcp)
-  # become dangling after npm pack copies only the target workspace's files.
-  postInstall = ''
-    find $out -xtype l -delete
-  '';
 
   doInstallCheck = true;
   nativeInstallCheckInputs = [ versionCheckHook ];
