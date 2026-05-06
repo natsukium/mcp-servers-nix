@@ -18,15 +18,7 @@ buildNpmPackage (finalAttrs: {
 
   npmDepsHash = "sha256-s7Stnezmw8nh361yFjiNRWKpCCObprzx3dSKEFgrWec=";
 
-  npmWorkspace = "packages/playwright-mcp";
-
   dontNpmBuild = true;
-
-  # npm workspace symlinks (e.g. node_modules/@playwright/mcp -> ../../packages/playwright-mcp)
-  # become dangling after npm pack copies only the target workspace's files.
-  postInstall = ''
-    find $out -xtype l -delete
-  '';
 
   doInstallCheck = true;
   nativeInstallCheckInputs = [ versionCheckHook ];
