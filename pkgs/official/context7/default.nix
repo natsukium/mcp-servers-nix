@@ -29,24 +29,41 @@ let
     dontBuild = true;
     dontFixup = true;
 
+    # The cache is populated alongside node_modules so the main installPhase
+    # can re-resolve with --production offline.
+    #
+    # --backend=copyfile avoids hardlinks from node_modules into the cache,
+    # which would otherwise create disallowed self-references in the FOD.
+    #
+    # bun also stores symlinks like cache/<pkg>/<ver>@@@1 pointing at absolute
+    # paths under $BUN_INSTALL_CACHE_DIR. The sandbox $TMPDIR differs across
+    # build hosts, making the output non-deterministic, so rewrite them to
+    # relative paths after copying.
     installPhase = ''
       runHook preInstall
 
       export HOME=$TMPDIR
+      export BUN_INSTALL_CACHE_DIR=$TMPDIR/bun-cache
 
-      # Install dependencies
-      bun install --frozen-lockfile --no-cache
+      bun install --frozen-lockfile --backend=copyfile
 
-      # Copy to output
       mkdir -p $out
       cp -r node_modules $out/
+      cp -r $BUN_INSTALL_CACHE_DIR $out/cache
       cp bun.lock package.json $out/
+
+      find $out/cache -type l -lname "$BUN_INSTALL_CACHE_DIR/*" | while read -r link; do
+        target=$(readlink "$link")
+        rel_in_cache=''${target#$BUN_INSTALL_CACHE_DIR/}
+        rel_to_cache=$(realpath --relative-to="$(dirname "$link")" "$out/cache")
+        ln -sfn "$rel_to_cache/$rel_in_cache" "$link"
+      done
 
       runHook postInstall
     '';
 
     # This hash represents the dependencies
-    outputHash = "sha256-En6dinY9wRnlr/+IUMQS1PaAYl/V4YvqE4ib8+hunKg=";
+    outputHash = "sha256-oHvXY8H9bFOjL1kUC61hoZ2JtgDjx9etd1iMaWb9pRE=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
@@ -68,6 +85,7 @@ stdenv.mkDerivation {
     export HOME=$TMPDIR
 
     cp -r ${deps}/node_modules .
+    chmod -R u+w node_modules
     cp ${deps}/bun.lock .
 
     substituteInPlace node_modules/.bin/tsc \
@@ -78,12 +96,20 @@ stdenv.mkDerivation {
     runHook postBuild
   '';
 
+  # bun lacks a `prune` command (https://github.com/oven-sh/bun/issues/3605),
+  # so wipe the dev node_modules and re-resolve with `--production` using the
+  # deps FOD's cache to drop devDependencies without hitting the network.
   installPhase = ''
     runHook preInstall
 
     mkdir -p $out/lib/context7-mcp
 
     cp -r dist $out/lib/context7-mcp/
+
+    export HOME=$TMPDIR
+    export BUN_INSTALL_CACHE_DIR=${deps}/cache
+    rm -rf node_modules
+    bun install --production --frozen-lockfile --backend=copyfile
 
     cp -r node_modules $out/lib/context7-mcp/
     cp package.json $out/lib/context7-mcp/
