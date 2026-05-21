@@ -36,8 +36,8 @@ stdenv.mkDerivation (finalAttrs: {
     inherit pnpmWorkspaces;
     pnpm = pnpm_10;
     # pnpmDeps hash observed from a build run
-    hash = "sha256-Hbm1ltx7IfINSe9Mo29GarsS1YFVtIuctCNXzobc2iA=";
-    fetcherVersion = 2;
+    hash = "sha256-U0YN1DgqjrKqy9NZy8BxwTce9hGOgRHNPFMPxRhFihA=";
+    fetcherVersion = 3;
   };
 
   inherit pnpmWorkspaces;

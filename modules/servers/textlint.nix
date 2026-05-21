@@ -9,7 +9,18 @@ let
   cfg = config.programs.textlint;
 
   finalPackage =
-    if cfg.extensions == [ ] then pkgs.textlint else pkgs.textlint.withPackages cfg.extensions;
+    if cfg.extensions == [ ] then
+      pkgs.textlint
+    else
+      # textlint.withPackages produces a wrapper derivation named
+      # "textlint-with-packages" whose binary is still "textlint" and which
+      # lacks meta.mainProgram. Set it so lib.getExe resolves $out/bin/textlint
+      # instead of falling back to the (nonexistent) "textlint-with-packages".
+      (pkgs.textlint.withPackages cfg.extensions).overrideAttrs (old: {
+        meta = (old.meta or { }) // {
+          mainProgram = "textlint";
+        };
+      });
 
   configFile =
     if cfg.configFile != null then
