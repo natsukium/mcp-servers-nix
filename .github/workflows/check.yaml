@@ -26,7 +26,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, ubuntu-24.04-arm, macos-latest, macos-15-intel ]
+        # macos-15-intel (x86_64-darwin) dropped: arrow-cpp is broken upstream on
+        # that platform (pulled via fastmcp) and x86_64-darwin is deprecated in
+        # nixpkgs (EOL after 26.05). aarch64-darwin is still covered by macos-latest.
+        os: [ ubuntu-latest, ubuntu-24.04-arm, macos-latest ]
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
