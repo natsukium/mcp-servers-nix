@@ -15,6 +15,10 @@ python3Packages.buildPythonApplication rec {
 
   format = "pyproject";
 
+  build-system = with python3Packages; [
+    setuptools
+  ];
+
   dependencies = with python3Packages; [
     fastmcp
     httpx
