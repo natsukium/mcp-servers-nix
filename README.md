@@ -130,6 +130,19 @@ The output format adapts to the `flavor` option — see
 - [google-calendar](./modules/servers/google-calendar.nix) — Google Calendar MCP
 - [greenhouse](./modules/servers/greenhouse.nix) — Greenhouse Harvest API MCP
 - [logseq](./modules/servers/logseq.nix) — LogSeq MCP server
+- [signoz](./modules/servers/signoz.nix) — MCP server for the SigNoz
+  observability platform
+
+### mcp-servers-nix-plus packages (no module yet)
+
+These are available as standalone packages (e.g.
+`nix run github:antono/mcp-servers-nix-plus#ctxo`) but do not have a
+configuration module yet:
+
+- [ctxo](./pkgs/plus/ctxo) — Dependency-aware, history-enriched context for
+  codebases
+- [freecad-mcp](./pkgs/plus/freecad-mcp) — FreeCAD MCP server
+- [lean-ctx](./pkgs/plus/lean-ctx) — Context runtime for AI agents (CCP + TDD)
  
 
 ## Examples
