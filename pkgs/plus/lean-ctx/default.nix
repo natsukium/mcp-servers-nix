@@ -42,8 +42,8 @@ rustPlatform.buildRustPackage rec {
   doInstallCheck = true;
   # only include check hooks if provided by the caller
   nativeInstallCheckInputs = lib.concatLists [
-    (if versionCheckHook == null then [] else [ versionCheckHook ])
-    (if versionCheckHomeHook == null then [] else [ versionCheckHomeHook ])
+    (if versionCheckHook == null then [ ] else [ versionCheckHook ])
+    (if versionCheckHomeHook == null then [ ] else [ versionCheckHomeHook ])
   ];
 
   passthru.category = "Utilities";

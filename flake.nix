@@ -59,11 +59,14 @@
         (forAllSystems (
           system:
           let
-            pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+            pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+            };
             examples = import ./examples { inherit pkgs; };
           in
-            # exclude example-signoz from checks to avoid requiring external tenant config
-            lib.removeAttrs examples [ "example-signoz" ]
+          # exclude example-signoz from checks to avoid requiring external tenant config
+          lib.removeAttrs examples [ "example-signoz" ]
         ))
         (forAllSystems (
           system:

@@ -82,7 +82,9 @@ stdenv.mkDerivation (finalAttrs: {
   doInstallCheck = true;
   nativeInstallCheckInputs = [ versionCheckHook ];
 
-  passthru = { category = "AI Coding Agents"; };
+  passthru = {
+    category = "AI Coding Agents";
+  };
 
   meta = {
     description = "MCP server delivering dependency-aware, history-enriched context for codebases";
