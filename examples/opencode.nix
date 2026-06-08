@@ -31,11 +31,6 @@ mcp-servers.lib.mkConfig pkgs {
     fetch = {
       enable = true;
     };
-
-    # NixOS documentation server
-    nixos = {
-      enable = true;
-    };
   };
 
   # Extra settings that will be merged into the config
