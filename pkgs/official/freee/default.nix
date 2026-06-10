@@ -9,13 +9,13 @@
 }:
 
 let
-  version = "0.29.0";
+  version = "0.30.0";
 
   src = fetchFromGitHub {
     owner = "freee";
     repo = "freee-mcp";
     tag = "v${version}";
-    hash = "sha256-GhCeZ/zJHvkcwtWpXDLOQOnVbpUPI6biyP5LaMr0l7Y=";
+    hash = "sha256-BSaF3PrYyb7SW6zVajYX1jtFOoJPdYvekgB9wggJYfI=";
   };
 
   deps = stdenvNoCC.mkDerivation {
@@ -41,7 +41,7 @@ let
       runHook postInstall
     '';
 
-    outputHash = "sha256-3v0ZFPmuiBJHM3l9CVdLcRoTsWAW54PQUI76ML0eZOI=";
+    outputHash = "sha256-Y3Rk/aarnoFodoA7YjqaXt3XfD1AbIxLqgu1B44IS1E=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
