@@ -7,6 +7,7 @@
   pyright,
   python3Packages,
   stdenv,
+  ty,
   writableTmpDirAsHomeHook,
 }:
 
@@ -65,21 +66,20 @@ let
 in
 python3Packages.buildPythonApplication (finalAttrs: {
   pname = "serena";
-  version = "1.5.1-unstable-2026-05-26";
+  version = "1.5.3-unstable-2026-06-26";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "016ccbe1c095a3eed7967737ac1d4df2754f5d96";
-    hash = "sha256-+x0vmR3rUEoEUV66YTspXRwYmNQQ5rM3+BFPeviuBI4=";
+    rev = "901bd2155a3b46cffb99b0a9416f1ccb65590c44";
+    hash = "sha256-0iXayrLi70oD8mJfJRhTN6+z6Cv3n1vEerCdfEJGYvg=";
   };
 
-  postPatch = ''
-    substituteInPlace src/solidlsp/language_servers/pyright_server.py \
-      --replace-fail 'return [core_path, "-m", "pyright.langserver", "--stdio"]' \
-        'return ["${lib.getExe' pyright "pyright-langserver"}", "--stdio"]'
-  '';
+  # Serena resolves its bundled language servers (pyright, ty, fortls) on demand
+  # via uvx, which requires network access. Launch them from PATH instead; the
+  # nixpkgs-provided binaries are wired in through makeWrapperArgs below.
+  patches = [ ./launch-language-servers-from-path.patch ];
 
   build-system = [ python3Packages.hatchling ];
 
@@ -105,6 +105,7 @@ python3Packages.buildPythonApplication (finalAttrs: {
       joblib
       lsprotocol
       mcp
+      oslex
       overrides
       pathspec
       psutil
@@ -130,6 +131,8 @@ python3Packages.buildPythonApplication (finalAttrs: {
     ":"
     (lib.makeBinPath [
       nodejs
+      pyright
+      ty
     ])
   ];
 
