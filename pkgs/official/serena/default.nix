@@ -72,8 +72,8 @@ python3Packages.buildPythonApplication (finalAttrs: {
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "4246ac0fe8ee60abdc274987fdfe17b4b8df9bfa";
-    hash = "sha256-/VhL/4pRvacZm9IgqIYRMMrtMwYocwE3cXk07Ii+bI8=";
+    rev = "ebe7646764419211fba7f701c15e648074cd5858";
+    hash = "sha256-rQZQku9Ca4xZbGRnShi3C44YiFBMsW8VmuenjBiPU4c=";
   };
 
   # Serena resolves its bundled language servers (pyright, ty, fortls) on demand
