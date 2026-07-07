@@ -66,14 +66,14 @@ let
 in
 python3Packages.buildPythonApplication (finalAttrs: {
   pname = "serena";
-  version = "1.5.3-unstable-2026-07-02";
+  version = "1.5.3-unstable-2026-07-07";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "3c241bab0d07d8adba8ef4f6c49676c954559dee";
-    hash = "sha256-PlSqyszlv5dCfcAUfxXdpYZzwVALSHfHXtKKHE7E664=";
+    rev = "e08e964d0c8703401f7ad419b9bf69d85d35188d";
+    hash = "sha256-t9gJEgRaFEK6Dsw61sILcfRZ9byhKwzxbnNRb9LH8mU=";
   };
 
   # Serena resolves its bundled language servers (pyright, ty, fortls) on demand
