@@ -1,26 +1,23 @@
-diff --git a/src/solidlsp/language_servers/common.py b/src/solidlsp/language_servers/common.py
-index 3cf9dcb..9e20d52 100644
---- a/src/solidlsp/language_servers/common.py
-+++ b/src/solidlsp/language_servers/common.py
-@@ -174,17 +174,10 @@ def build_uvx_launch_command(
-     :param extra_args: Arguments appended after the entrypoint (e.g. ``("--stdio",)``).
-     :param python_version: Python interpreter version passed via ``-p`` (uv will fetch it if missing).
-     """
--    base_args = ["-p", python_version, "--from", f"{package}=={version}", entrypoint, *extra_args]
+diff --git a/src/solidlsp/ls.py b/src/solidlsp/ls.py
+index cbc8200..74b06e5 100644
+--- a/src/solidlsp/ls.py
++++ b/src/solidlsp/ls.py
+@@ -489,17 +489,10 @@ class LanguageServerDependencyProviderUvx(LanguageServerDependencyProviderBaseCo
+         :param entrypoint: Console script provided by the package (e.g. ``"pyright-langserver"``).
+         :param python_version: Python interpreter version passed via ``-p`` (uv will fetch it if missing).
+         """
+-        base_args = ["-p", python_version, "--from", f"{package}=={version}", entrypoint]
 -
--    uvx_path = os.environ.get("UVX") or shutil.which("uvx")
--    if uvx_path is not None:
--        return [uvx_path, *base_args]
+-        uvx_path = os.environ.get("UVX") or shutil.which("uvx")
+-        if uvx_path is not None:
+-            return [uvx_path, *base_args]
 -
--    uv_path = shutil.which("uv")
--    if uv_path is not None:
--        return [uv_path, "x", *base_args]
+-        uv_path = shutil.which("uv")
+-        if uv_path is not None:
+-            return [uv_path, "x", *base_args]
 -
--    raise RuntimeError("Could not find 'uvx' or 'uv' in PATH. Install uv (https://docs.astral.sh/uv/).")
-+    # Nix wires the language server's entrypoint onto PATH, so launch it
-+    # directly. uvx/uv would download the package on demand, which needs
-+    # network access that is unavailable offline and in the build sandbox.
-+    return [shutil.which(entrypoint) or entrypoint, *extra_args]
- 
- 
- def build_npm_install_command(package_name: str, version: str, registry: str | None = None) -> list[str]:
+-        raise RuntimeError("Could not find 'uvx' or 'uv' in PATH. Install uv (https://docs.astral.sh/uv/).")
++        # Nix wires the language server's entrypoint onto PATH, so launch it
++        # directly. uvx/uv would download the package on demand, which needs
++        # network access that is unavailable offline and in the build sandbox.
++        return [shutil.which(entrypoint) or entrypoint]
