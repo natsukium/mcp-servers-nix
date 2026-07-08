@@ -26,6 +26,7 @@ in
   mcp-server-time = pkgs.callPackage ./reference/time.nix { };
 
   # official servers
+  chrome-devtools-mcp = pkgs.callPackage ./official/chrome-devtools { };
   context7-mcp = pkgs.callPackage ./official/context7 { };
   deepl-mcp-server = pkgs.callPackage ./official/deepl { };
   esa-mcp-server = pkgs.callPackage ./official/esa { };
