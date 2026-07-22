@@ -76,3 +76,9 @@ Add all MCP server packages to your nixpkgs via the provided overlay:
 | `playwright-mcp` | Playwright browser automation |
 | `serena` | Serena code intelligence |
 | `tavily-mcp` | Tavily search |
+
+### Community Servers
+
+| Package | Description |
+|---------|-------------|
+| `mcp-gsheets` | Google Sheets read/write |
