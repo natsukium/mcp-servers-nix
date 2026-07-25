@@ -15,6 +15,7 @@ jobs:
           - context7-mcp
           - esa-mcp-server
           - freee-mcp
+          - mcp-gsheets
           - nd-mcp
           - playwright-mcp
           - serena
