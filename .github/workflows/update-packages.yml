@@ -17,6 +17,7 @@ jobs:
           - freee-mcp
           - mcp-gsheets
           - nd-mcp
+          - notion-mcp-server
           - playwright-mcp
           - serena
     steps:
