@@ -17,7 +17,7 @@ buildNpmPackage {
 
   nodejs = nodejs_22;
 
-  npmDepsHash = "sha256-jmz4JdpeHH07vJQFntBwrENbJaIcOuZMb7+qf497VOE=";
+  npmDepsHash = "sha256-KhlTXcS+VDSPGnEus9fA0xhIxfTGwX1Cr5hbxFvdc2k=";
 
   npmWorkspace = "src/${workspace}";
 
