@@ -1,8 +1,8 @@
-diff --git a/src/solidlsp/ls.py b/src/solidlsp/ls.py
-index cbc8200..74b06e5 100644
---- a/src/solidlsp/ls.py
-+++ b/src/solidlsp/ls.py
-@@ -489,17 +489,10 @@ class LanguageServerDependencyProviderUvx(LanguageServerDependencyProviderBaseCo
+diff --git a/src/solidlsp/dependency_provider.py b/src/solidlsp/dependency_provider.py
+index bd39e77..a0b2b3a 100644
+--- a/src/solidlsp/dependency_provider.py
++++ b/src/solidlsp/dependency_provider.py
+@@ -206,17 +206,10 @@ class LanguageServerDependencyProviderUvx(LanguageServerDependencyProviderBaseCo
          :param entrypoint: Console script provided by the package (e.g. ``"pyright-langserver"``).
          :param python_version: Python interpreter version passed via ``-p`` (uv will fetch it if missing).
          """
@@ -14,10 +14,13 @@ index cbc8200..74b06e5 100644
 -
 -        uv_path = shutil.which("uv")
 -        if uv_path is not None:
--            return [uv_path, "x", *base_args]
+-            return [uv_path, "tool", "run", *base_args]  # `uv tool run` is the same as `uvx`
 -
 -        raise RuntimeError("Could not find 'uvx' or 'uv' in PATH. Install uv (https://docs.astral.sh/uv/).")
 +        # Nix wires the language server's entrypoint onto PATH, so launch it
 +        # directly. uvx/uv would download the package on demand, which needs
 +        # network access that is unavailable offline and in the build sandbox.
 +        return [shutil.which(entrypoint) or entrypoint]
+ 
+     def _create_default_base_command(self):
+         version = self._custom_settings.get(self._version_setting_key, self._default_version)

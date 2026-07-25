@@ -66,14 +66,14 @@ let
 in
 python3Packages.buildPythonApplication (finalAttrs: {
   pname = "serena";
-  version = "1.5.3-unstable-2026-07-14";
+  version = "1.6.1-unstable-2026-07-24";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "286a624a6aa60a0c5b97ac2ca874845d32731e1a";
-    hash = "sha256-7FfL9OOwAy33sArQ1YN3fonb8IEYMrUIqRDzesQPZ+0=";
+    rev = "33b042ad067a1240e457f5616b9cdfe1ff49e92c";
+    hash = "sha256-ZCB2azR7H8AS+CwEB77jotUkyft20DLACjD3hBnub+8=";
   };
 
   # Serena resolves its bundled language servers (pyright, ty, fortls) on demand
@@ -160,6 +160,11 @@ python3Packages.buildPythonApplication (finalAttrs: {
 
     # Flaky tests due to YAML config parsing issues in sandbox
     "test_cli_project_commands.py"
+
+    # Tests fail in sandbox due to language server initialization failure
+    "test_find_referencing_symbol_tool_handles_sync_with_relative_path"
+    "test_find_referencing_symbol_tool_handles_sync_without_relative_path"
+    "test_ls_low_level_find_references_with_explicit_sync"
   ];
 
   pytestFlags = [ "test/serena" ];
