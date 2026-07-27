@@ -6,16 +6,16 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "mcp-gsheets";
-  version = "1.9.0";
+  version = "1.10.0";
 
   src = fetchFromGitHub {
     owner = "freema";
     repo = "mcp-gsheets";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-fDfsMZ2e7yr5baXsoz4MDs8jmErH60Q/w2Ixo1Eh4+o=";
+    hash = "sha256-b/gSjc4eu0FACAADAavYXxlVLXRSzwaUMJWh5bMs6Lg=";
   };
 
-  npmDepsHash = "sha256-aq6E9nk6597mtXahku9cub/uU9hsSj2GjdlXeoZTAv4=";
+  npmDepsHash = "sha256-kCrcwQc1RPLDzqaVepNiyQjkaO0U05FY6EpOcmkwM5o=";
 
   # `npm run build` (tsup) bundles src into dist/, keeping googleapis and the
   # google-auth stack external, so the pruned production node_modules is kept
