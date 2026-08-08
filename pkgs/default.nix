@@ -43,4 +43,5 @@ in
   # community servers
   mcp-gsheets = pkgs.callPackage ./community/mcp-gsheets { };
   clickup-mcp-server = warnRemoved "clickup-mcp-server has been removed since upstream stopped distribution and switched to shareware";
+  fibery-mcp-server = pkgs.callPackage ./community/fibery-mcp-server { };
 }
