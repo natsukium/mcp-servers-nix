@@ -66,14 +66,14 @@ let
 in
 python3Packages.buildPythonApplication (finalAttrs: {
   pname = "serena";
-  version = "1.6.1-unstable-2026-08-02";
+  version = "1.6.1-unstable-2026-08-09";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "oraios";
     repo = "serena";
-    rev = "29d07d4f6b7a04a0db3981d6c6be6f736cfb44d2";
-    hash = "sha256-pjVgimAwbOEU/6kmFmPmRh/vl3tesC110V8hkjYDf0k=";
+    rev = "c3f5aab59eddab795f55c6b74ee1019584634a21";
+    hash = "sha256-zK80r8RrQ+QO0yORfDs7UPDx3tPjO/frvCC1EpZymew=";
   };
 
   # Serena resolves its bundled language servers (pyright, ty, fortls) on demand
@@ -138,13 +138,19 @@ python3Packages.buildPythonApplication (finalAttrs: {
 
   pythonImportsCheck = [ "serena" ];
 
-  nativeCheckInputs = with python3Packages; [
-    pytest-xdist
-    pytestCheckHook
-    syrupy
-    tkinter
-    writableTmpDirAsHomeHook
-  ];
+  nativeCheckInputs =
+    (with python3Packages; [
+      pytest-xdist
+      pytestCheckHook
+      syrupy
+      tkinter
+    ])
+    ++ [
+      nodejs
+      pyright
+      ty
+      writableTmpDirAsHomeHook
+    ];
 
   disabledTests = [
     # Requires various language runtimes and language servers
@@ -161,10 +167,6 @@ python3Packages.buildPythonApplication (finalAttrs: {
     # Flaky tests due to YAML config parsing issues in sandbox
     "test_cli_project_commands.py"
 
-    # Tests fail in sandbox due to language server initialization failure
-    "test_find_referencing_symbol_tool_handles_sync_with_relative_path"
-    "test_find_referencing_symbol_tool_handles_sync_without_relative_path"
-    "test_ls_low_level_find_references_with_explicit_sync"
   ];
 
   pytestFlags = [ "test/serena" ];
