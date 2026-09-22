@@ -7,6 +7,7 @@
   fetchFromGitHub,
   buildNpmPackage,
   typescript,
+  yq-go,
   writeScriptBin,
   makeBinaryWrapper,
   nodejs_22,
@@ -23,9 +24,16 @@ buildNpmPackage {
 
   env.PUPPETEER_SKIP_DOWNLOAD = true;
 
+  # tsc 7 (tsgo) defaults compilerOptions.types to [], and the monorepo sets no
+  # `types`, so @types/node never loads.
+  preBuild = ''
+    yq -i '.compilerOptions.types = ["node"]' tsconfig.json
+  '';
+
   nativeBuildInputs = [
     makeBinaryWrapper
     typescript
+    yq-go
     (writeScriptBin "shx" "")
   ];
 
