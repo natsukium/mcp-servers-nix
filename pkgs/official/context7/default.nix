@@ -12,13 +12,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "context7-mcp";
-  version = "4.4.3";
+  version = "4.4.4";
 
   src = fetchFromGitHub {
     owner = "upstash";
     repo = "context7";
     tag = "@upstash/context7-mcp@${finalAttrs.version}";
-    hash = "sha256-U4ZwnRllp0jxlR4zMyNRaZXyS6HvhzEVwZvqlhMwtSU=";
+    hash = "sha256-QwSGvtvykYLJaEiJKHbxndbSEpTkOUbWACoLwt/y7JU=";
   };
 
   pnpmWorkspaces = [ "@upstash/context7-mcp" ];
