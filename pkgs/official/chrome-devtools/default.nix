@@ -9,17 +9,17 @@
 
 buildNpmPackage (finalAttrs: {
   pname = "chrome-devtools-mcp";
-  version = "1.10.1";
+  version = "1.12.0";
 
   src = fetchFromGitHub {
     owner = "ChromeDevTools";
     repo = "chrome-devtools-mcp";
     tag = "chrome-devtools-mcp-v${finalAttrs.version}";
     fetchSubmodules = true;
-    hash = "sha256-4gF4D/r4xt0IOa6UqR2/Oad04mI2NLrH4EMmWRw/30Q=";
+    hash = "sha256-3H858tro0VGawNrINf1FGtLRWsOISq2GK+eLTCqGUTg=";
   };
 
-  npmDepsHash = "sha256-tLjVNhC8no+JeESBEsUdCxOT87sTO3lZbndbdVKC1Zs=";
+  npmDepsHash = "sha256-CEYtrmCDO+EeKoScH8IO+jsJCrkvzJKqqeoT+yqD1FU=";
 
   # Upstream runs its TypeScript build scripts directly with `node`, which
   # needs a Node with native type stripping.
