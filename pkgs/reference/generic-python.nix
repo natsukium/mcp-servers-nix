@@ -8,6 +8,7 @@
   pythonRelaxDeps ? [ ],
   doCheck ? true,
   nativeCheckInputs ? [ python3Packages.pytestCheckHook ],
+  disabledTests ? [ ],
 }:
 python3Packages.buildPythonApplication (finalAttrs: {
   pname = "mcp-server-${service}";
@@ -20,6 +21,7 @@ python3Packages.buildPythonApplication (finalAttrs: {
     pythonRelaxDeps
     doCheck
     nativeCheckInputs
+    disabledTests
     ;
 
   pythonImportsCheck = [ "mcp_server_${service}" ];
