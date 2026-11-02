@@ -51,8 +51,8 @@ jobs:
             # Restrict to v-prefixed semver tags; upstream also ships
             # legacy date-named tags (e.g. 2025-06-20) that otherwise
             # land at the head of the releases atom feed and get picked
-            # as the "version" portion of the unstable string.
-            NIX_UPDATE_FLAGS='--version=branch --version-regex v(.*)'
+            # as the version.
+            NIX_UPDATE_FLAGS='--version-regex v(.*)'
           elif [[ "${{ matrix.package }}" == "mastra-mcp-docs-server" ]]; then
             NIX_UPDATE_FLAGS='--version-regex @mastra/mcp-docs-server@(.*)'
           elif [[ "${{ matrix.package }}" == "freee-mcp" ]]; then
