@@ -92,6 +92,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [netdata](./modules/servers/netdata.nix)
 - [nixos](./modules/servers/nixos.nix)
 - [notion](./modules/servers/notion.nix)
+- [perplexity](./modules/servers/perplexity.nix)
 - [playwright](./modules/servers/playwright.nix)
 - [sequential-thinking](./modules/servers/sequential-thinking.nix)
 - [serena](./modules/servers/serena.nix)
