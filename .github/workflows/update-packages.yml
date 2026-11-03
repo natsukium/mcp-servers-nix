@@ -17,6 +17,7 @@ jobs:
           - deepl-mcp-server
           - esa-mcp-server
           - freee-mcp
+          - mastra-mcp-docs-server
           - mcp-gsheets
           - nd-mcp
           - notion-mcp-server
@@ -49,7 +50,13 @@ jobs:
         id: update-package
         run: |
           if [[ "${{ matrix.package }}" == "mastra-mcp-docs-server" ]]; then
-            NIX_UPDATE_FLAGS='--version-regex @mastra/mcp-docs-server@(.*)'
+            # The monorepo's releases feed is dominated by other packages, so
+            # nix-update never finds this one there; read the tags instead.
+            VERSION=$(gh api --paginate \
+              'repos/mastra-ai/mastra/git/matching-refs/tags/@mastra/mcp-docs-server@' \
+              --jq '.[].ref' \
+              | sed 's|.*@||' | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+            NIX_UPDATE_FLAGS="--version $VERSION --custom-dep docs"
           elif [[ "${{ matrix.package }}" == "freee-mcp" ]]; then
             NIX_UPDATE_FLAGS="--subpackage deps"
           elif [[ "${{ matrix.package }}" == "context7-mcp" ]]; then
@@ -73,6 +80,8 @@ jobs:
           echo "body<<EOF" >> $GITHUB_OUTPUT
           echo "$COMMIT_BODY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Create Pull Request
         id: create-pr
