@@ -13,11 +13,9 @@
 }:
 buildNpmPackage {
   pname = "mcp-server-${service}";
-  inherit (import ./source.nix { inherit fetchFromGitHub; }) version src;
+  inherit (import ./source.nix { inherit fetchFromGitHub; }) version src npmDepsHash;
 
   nodejs = nodejs_24;
-
-  npmDepsHash = "sha256-wnrR1mv9p8xBzArhSrOOM0l87PgBSUl2o6Th1kaAst0=";
 
   npmWorkspace = "src/${workspace}";
 
