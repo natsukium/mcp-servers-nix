@@ -79,6 +79,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [fetch](./modules/servers/fetch.nix)
 - [filesystem](./modules/servers/filesystem.nix)
 - [fluxcd-operator](./modules/servers/fluxcd-operator.nix)
+- [forgejo](./modules/servers/forgejo.nix)
 - [freee](./modules/servers/freee.nix)
 - [git](./modules/servers/git.nix)
 - [github](./modules/servers/github.nix)
