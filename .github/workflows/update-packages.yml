@@ -19,6 +19,7 @@ jobs:
           - freee-mcp
           - mastra-mcp-docs-server
           - mcp-gsheets
+          - mcp-server-everything
           - nd-mcp
           - notion-mcp-server
           - playwright-mcp
@@ -63,6 +64,9 @@ jobs:
             NIX_UPDATE_FLAGS='--version-regex @upstash/context7-mcp@(.*)'
           elif [[ "${{ matrix.package }}" == "chrome-devtools-mcp" ]]; then
             NIX_UPDATE_FLAGS='--version-regex chrome-devtools-mcp-v(.*)'
+          elif [[ "${{ matrix.package }}" == "mcp-server-everything" ]]; then
+            # Stands in for all reference servers, which share one source.
+            NIX_UPDATE_FLAGS="--override-filename pkgs/reference/source.nix"
           else
             NIX_UPDATE_FLAGS=""
           fi
@@ -72,6 +76,9 @@ jobs:
 
           # Extract title (first line containing package name)
           COMMIT_TITLE=$(echo "$OUTPUT" | grep -E "^${{ matrix.package }}:" | head -1)
+          if [[ "${{ matrix.package }}" == "mcp-server-everything" ]]; then
+            COMMIT_TITLE="${COMMIT_TITLE/#mcp-server-everything:/reference-servers:}"
+          fi
 
           # Extract body (Diff and Changelog lines)
           COMMIT_BODY=$(echo "$OUTPUT" | grep -E "^(Diff:|Changelog:)" | sed 's/$/\n/')
