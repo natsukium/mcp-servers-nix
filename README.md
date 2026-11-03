@@ -82,6 +82,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [forgejo](./modules/servers/forgejo.nix)
 - [freee](./modules/servers/freee.nix)
 - [git](./modules/servers/git.nix)
+- [gitea](./modules/servers/gitea.nix)
 - [github](./modules/servers/github.nix)
 - [grafana](./modules/servers/grafana.nix)
 - [home-assistant](./modules/servers/home-assistant.nix)
