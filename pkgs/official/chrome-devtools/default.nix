@@ -15,8 +15,13 @@ buildNpmPackage (finalAttrs: {
     owner = "ChromeDevTools";
     repo = "chrome-devtools-mcp";
     tag = "chrome-devtools-mcp-v${finalAttrs.version}";
-    fetchSubmodules = true;
-    hash = "sha256-3H858tro0VGawNrINf1FGtLRWsOISq2GK+eLTCqGUTg=";
+    # fetchSubmodules recurses into devtools-frontend's own submodules, which
+    # upstream excludes (fetchRecurseSubmodules = false) and which pin commits
+    # that no longer exist on chromium.googlesource.com.
+    postCheckout = ''
+      git -C "$out" submodule update --init --depth 1
+    '';
+    hash = "sha256-Hj9evndzJa7HvJe3cMwefDK0nu8TGyj32IVR2fGpADY=";
   };
 
   npmDepsHash = "sha256-CEYtrmCDO+EeKoScH8IO+jsJCrkvzJKqqeoT+yqD1FU=";
