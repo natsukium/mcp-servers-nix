@@ -6,16 +6,16 @@
 
 buildNpmPackage {
   pname = "tavily-mcp-server";
-  version = "0.2.10";
+  version = "0.2.23";
 
   src = fetchFromGitHub {
     owner = "tavily-ai";
     repo = "tavily-mcp";
-    rev = "fea64be37d3a9589547d8c66af4fb8505fd2b265";
-    hash = "sha256-gqyPeJWRvsLrkDbQYFv3mW1+IVqtWmgrcVsdDWG9JVk=";
+    rev = "3be0c424ed2e9132e3830aa6a8a41ba96becd6d6";
+    hash = "sha256-7gFWBPtkLVKTF1FtGs4hCdaZh31CAp0dwHdTLAKbWMs=";
   };
 
-  npmDepsHash = "sha256-QsWzfIa3t0V6fH2wlyafB2B6WH7gr5nV6PS1Q4+gXNY=";
+  npmDepsHash = "sha256-0fmNDhaUJiE/XF9EJmEYv61AH8V1KvJo2xe8A0/ngGM=";
 
   meta = {
     description = "Official Tavily MCP Server";
