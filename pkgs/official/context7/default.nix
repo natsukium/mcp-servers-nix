@@ -78,14 +78,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "Up-to-date code documentation for LLMs and AI code editors";
     homepage = "https://context7.com";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [
-      natsukium
-      rec {
-        github = "vaporif";
-        githubId = 3934971;
-        name = github;
-      }
-    ];
+    maintainers = with lib.maintainers; [ natsukium ];
     mainProgram = "context7-mcp";
   };
 })

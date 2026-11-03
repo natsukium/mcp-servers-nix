@@ -21,7 +21,7 @@ buildNpmPackage (finalAttrs: {
     description = "Official MCP server for esa.io";
     homepage = "https://github.com/esaio/esa-mcp-server";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ sei40kr ];
+    maintainers = [ ];
     mainProgram = "esa-mcp-server";
   };
 })

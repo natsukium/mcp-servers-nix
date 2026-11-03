@@ -75,7 +75,7 @@ buildNpmPackage (finalAttrs: {
     homepage = "https://github.com/ChromeDevTools/chrome-devtools-mcp";
     changelog = "https://github.com/ChromeDevTools/chrome-devtools-mcp/releases/tag/chrome-devtools-mcp-v${finalAttrs.version}";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [ aldoborrero ];
+    maintainers = [ ];
     mainProgram = "chrome-devtools-mcp";
   };
 })

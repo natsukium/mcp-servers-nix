@@ -29,7 +29,7 @@ buildGoModule (finalAttrs: {
     homepage = "https://github.com/netdata/netdata/tree/master/src/web/mcp";
     changelog = "https://github.com/netdata/netdata/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.gpl3Plus;
-    maintainers = with lib.maintainers; [ takeokunn ];
+    maintainers = [ ];
     mainProgram = "nd-mcp";
   };
 })
