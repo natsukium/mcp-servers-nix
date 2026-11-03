@@ -21,7 +21,7 @@ buildNpmPackage {
     description = "Official Tavily MCP Server";
     homepage = "https://github.com/tavily-ai/tavily-mcp";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ vaporif ];
+    maintainers = [ ];
     mainProgram = "tavily-mcp";
   };
 }

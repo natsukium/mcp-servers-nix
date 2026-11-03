@@ -113,7 +113,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "AI access to Mastra.ai documentation";
     homepage = "https://mastra.ai";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [ takeokunn ];
+    maintainers = [ ];
     mainProgram = "mcp-server-mastra";
   };
 })

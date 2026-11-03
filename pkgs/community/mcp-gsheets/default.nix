@@ -26,7 +26,7 @@ buildNpmPackage (finalAttrs: {
     homepage = "https://github.com/freema/mcp-gsheets";
     changelog = "https://github.com/freema/mcp-gsheets/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ aldoborrero ];
+    maintainers = [ ];
     mainProgram = "mcp-gsheets";
   };
 })

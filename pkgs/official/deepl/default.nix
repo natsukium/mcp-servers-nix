@@ -23,7 +23,7 @@ buildNpmPackage (finalAttrs: {
     description = "MCP server for DeepL translation API";
     homepage = "https://github.com/DeepLcom/deepl-mcp-server";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ vaporif ];
+    maintainers = [ ];
     mainProgram = "deepl-mcp-server";
   };
 })
