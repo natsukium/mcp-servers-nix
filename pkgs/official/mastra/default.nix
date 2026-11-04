@@ -13,13 +13,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "mastra-mcp-docs-server";
-  version = "1.3.11";
+  version = "1.3.12";
 
   src = fetchFromGitHub {
     owner = "mastra-ai";
     repo = "mastra";
     tag = "@mastra/mcp-docs-server@${finalAttrs.version}";
-    hash = "sha256-sCv43CfND0cu0LTKtVURGj7VbC6ICeSmezLpaUyTvFc=";
+    hash = "sha256-Ot2Jd1BHfIt1fiNSZYntZf6gVAEyuUzYSn1XmLLLRUU=";
   };
 
   # With the global virtual store, node_modules links point into the pnpm
@@ -40,7 +40,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       ;
     pnpm = pnpm_11;
     fetcherVersion = 5;
-    hash = "sha256-8VjLm/30J5+XLiFKExHkUFWpMxebwX1iSaD7H8mntmY=";
+    hash = "sha256-nmesm3zjBcJTjTE/T7M/9EbrXqGc2DgqJ3QR8mxHdM0=";
   };
 
   nativeBuildInputs = [
@@ -105,7 +105,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     # generated output for the same version.
     docs = fetchzip {
       url = "https://registry.npmjs.org/@mastra/mcp-docs-server/-/mcp-docs-server-${finalAttrs.version}.tgz";
-      hash = "sha256-5FqrZ1pb+wrSrrcrVkUruGg0ZGcDsGSzn2OPVPRM5CQ=";
+      hash = "sha256-8NX0/rUZeLbGFUOqB/oWLOVVHwRMFMrULv1aPnQcCvA=";
     };
   };
 
