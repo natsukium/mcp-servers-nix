@@ -70,6 +70,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 
 ## Available Modules
 
+- [agent-workspace-linux](./modules/servers/agent-workspace-linux.nix)
 - [clickup](./modules/servers/clickup.nix)
 - [codex](./modules/servers/codex.nix)
 - [context7](./modules/servers/context7.nix)
