@@ -8,6 +8,7 @@ let
   # so that `nix flake check` keeps evaluating on Darwin.
   linuxOnlyPackages = [
     "agent-workspace-linux"
+    "computer-use-linux"
   ];
   packages = lib.filterAttrs (
     name: _: pkgs.stdenv.hostPlatform.isLinux || !lib.elem name linuxOnlyPackages

@@ -69,6 +69,7 @@ Add all MCP server packages to your nixpkgs via the provided overlay:
 |---------|-------------|
 | `agent-workspace-linux` | Isolated Linux desktop workspaces (Linux only) |
 | `chrome-devtools-mcp` | Chrome DevTools browser debugging |
+| `computer-use-linux` | Native Linux desktop control (Linux only) |
 | `context7-mcp` | Context7 documentation lookup |
 | `deepl-mcp-server` | DeepL translation |
 | `esa-mcp-server` | esa.io integration |

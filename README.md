@@ -73,6 +73,7 @@ The output format adapts to the `flavor` option — see [Supported Flavors](#sup
 - [agent-workspace-linux](./modules/servers/agent-workspace-linux.nix)
 - [clickup](./modules/servers/clickup.nix)
 - [codex](./modules/servers/codex.nix)
+- [computer-use-linux](./modules/servers/computer-use-linux.nix)
 - [context7](./modules/servers/context7.nix)
 - [deepl](./modules/servers/deepl.nix)
 - [esa](./modules/servers/esa.nix)
