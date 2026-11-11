@@ -1,12 +1,12 @@
 { fetchFromGitHub }:
 rec {
-  version = "2.3.0";
+  version = "2.4.0";
   src = fetchFromGitHub {
     owner = "modelcontextprotocol";
     repo = "servers";
     tag = "v${version}";
-    hash = "sha256-L6t0QuJshn207uc3+n+IoDp7vPuY2YLcu6ku1rEgzHk=";
+    hash = "sha256-edwibnJdNuOAF31FbZQ/CVDxM5WyIxl0ycmebTkWroE=";
   };
   # Kept next to src so that nix-update, pointed at this file, updates it too.
-  npmDepsHash = "sha256-fBa3SEyrXM0R63ph6nK3HNI8xIK7km4Hg0LIBOz1D40=";
+  npmDepsHash = "sha256-t/Ugjb1nySxNNKcw9IGFAvuUwTBebmWPr1EgANY/DOk=";
 }
