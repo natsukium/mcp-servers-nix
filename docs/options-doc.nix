@@ -55,12 +55,24 @@ let
         ) opt.declarations;
       };
   };
+
+  # nixos-render-docs reuses renderer state across the 100-option chunks a worker
+  # processes, so the blank lines it emits depend on the worker count; render
+  # serially to make the output identical on every machine.
+  optionsCommonMark = optionsDoc.optionsCommonMark.overrideAttrs (old: {
+    buildCommand =
+      let
+        parallelFlag = "-j $NIX_BUILD_CORES ";
+      in
+      assert lib.hasInfix parallelFlag old.buildCommand;
+      lib.replaceStrings [ parallelFlag ] [ "" ] old.buildCommand;
+  });
 in
 {
-  inherit (optionsDoc) optionsCommonMark;
+  inherit optionsCommonMark;
 
   check = pkgs.runCommand "check-module-options-doc" { } ''
-    if ! ${pkgs.diffutils}/bin/diff -q ${optionsDoc.optionsCommonMark} ${../docs/module-options.md}; then
+    if ! ${pkgs.diffutils}/bin/diff -q ${optionsCommonMark} ${../docs/module-options.md}; then
       echo "docs/module-options.md is out of date."
       echo "Run: nix build -f docs/options-doc.nix optionsCommonMark && install -m 644 result docs/module-options.md"
       exit 1

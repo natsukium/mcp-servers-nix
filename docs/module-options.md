@@ -2808,6 +2808,8 @@ true
 
 ## programs\.git\.package
 
+
+
 The mcp-server-git package to use\.
 
 
@@ -5748,6 +5750,8 @@ true
 
 
 ## programs\.sequential-thinking\.package
+
+
 
 The mcp-server-sequential-thinking package to use\.
 
