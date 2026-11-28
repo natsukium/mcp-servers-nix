@@ -12,7 +12,9 @@ jobs:
       fail-fast: false
       matrix:
         package:
+          - agent-workspace-linux
           - chrome-devtools-mcp
+          - computer-use-linux
           - context7-mcp
           - deepl-mcp-server
           - esa-mcp-server
